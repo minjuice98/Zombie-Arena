@@ -3,6 +3,7 @@
 
 class Player;
 class Zombie;
+class Blood;
 
 class SceneGame : public Scene
 {
@@ -12,6 +13,9 @@ protected:
 
 	std::list<Zombie*> zombieList;
 	std::list<Zombie*> zombiePool;
+
+	std::list<Blood*> bloodList;
+	std::list<Blood*> bloodPool;
 
 	sf::Sprite cursor;
 
@@ -26,10 +30,15 @@ public:
 	void Draw(sf::RenderWindow& window) override;
 
 	void SpawnZombies(int count);
+	void SpawnBlood(const sf::Vector2f& pos);
 	void Skill();
 
 	const std::list<Zombie*>& GetZombies() const 
 	{
 		return zombieList;
+	}
+	const std::list<Blood*>& GetBlood() const
+	{
+		return bloodList;
 	}
 };

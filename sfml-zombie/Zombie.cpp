@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Zombie.h"
 #include "Player.h"
+#include "Blood.h"
 
 Zombie::Zombie(const std::string& name)
 	: GameObject(name)
@@ -54,6 +55,8 @@ void Zombie::Release()
 
 void Zombie::Reset()
 {
+	sceneGame = dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene());
+
 	player = (Player*)SCENE_MGR.GetCurrentScene()->FindGameObject("Player");
 
 	body.setTexture(TEXTURE_MGR.Get(texId), true);
@@ -88,7 +91,6 @@ void Zombie::Update(float dt)
 void Zombie::Draw(sf::RenderWindow& window)
 {
 	window.draw(body);
-	window.draw(blood);
 	hitBox.Draw(window);
 }
 
@@ -108,7 +110,7 @@ void Zombie::SetType(Types type)
 	case Types::Chaser:
 		texId = "graphics/chaser.png";
 		maxHp = 100;
-		speed = 100.f;
+		speed = 50.f;
 		damage = 10;
 		attackInterval = 1.f;
 		mpUp = 2;
@@ -116,30 +118,24 @@ void Zombie::SetType(Types type)
 	case Types::Crawler:
 		texId = "graphics/crawler.png";
 		maxHp = 50;
-		speed = 500;
+		speed = 50;
 		damage = 10;
 		attackInterval = 1.f;
 		mpUp = 3;
 		break;
 	}
-
 }
 
 void Zombie::OnDamage(int damage)
 {
-	//blood.setTexture(TEXTURE_MGR.Get("graphics/blood.png"), true);
 	int mp = 0;
 	hp = Utils::Clamp(hp - damage, 0, maxHp);
 	if (hp == 0)
 	{
 		SetActive(false);
-		//bloodPos=GetPosition();
-		//blood.setPosition(bloodPos);
-		mp= player->GetMp();
-		mp += 10;
-
-
-		player->SetMp(mp);
-		
+		sceneGame->SpawnBlood(GetPosition());
+		//mp= player->GetMp();
+		//mp += 10;
+		//player->SetMp(mp);
 	}
 }

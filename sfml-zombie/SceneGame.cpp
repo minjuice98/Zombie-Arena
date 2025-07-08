@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "TileMap.h"
 #include "Zombie.h"
+#include "Blood.h"
 
 SceneGame::SceneGame() 
 	: Scene(SceneIds::Game)
@@ -30,6 +31,12 @@ void SceneGame::Init()
 		zombiePool.push_back(zombie);
 	}
 
+	for (int i = 0; i < 50; ++i)
+	{
+		Blood* blood = (Blood*)AddGameObject(new Blood());
+		blood->SetActive(false);
+		bloodPool.push_back(blood);
+	}
 	Scene::Init();
 }
 
@@ -62,6 +69,13 @@ void SceneGame::Exit()
 	}
 	zombieList.clear();
 
+	for (Blood* blood : bloodList)
+	{
+		blood->SetActive(false);
+		bloodPool.push_back(blood);
+	}
+	bloodList.clear();
+
 	Scene::Exit();
 }
 
@@ -82,6 +96,20 @@ void SceneGame::Update(float dt)
 		else
 		{
 			++it;
+		}
+	}
+
+	auto it2 = bloodList.begin();
+	while (it2 != bloodList.end())
+	{
+		if (!(*it2)->GetActive())
+		{
+			bloodPool.push_back(*it2);
+			it2 = bloodList.erase(it2);
+		}
+		else
+		{
+			++it2;
 		}
 	}
 
@@ -130,6 +158,32 @@ void SceneGame::SpawnZombies(int count)
 		zombie->SetPosition(Utils::RandomInUnitCircle() * 500.f);
 		zombieList.push_back(zombie);
 	}
+}
+
+void SceneGame::SpawnBlood(const sf::Vector2f& pos)
+{
+	std::cout << "bloodPool size: " << bloodPool.size() << std::endl;
+	for (auto b : bloodPool)
+	{
+		if (b == nullptr)
+			std::cout << "bloodPool contains nullptr!" << std::endl;
+	}
+
+	Blood* blood = nullptr;
+
+	if (bloodPool.empty())
+	{
+		blood = (Blood*)AddGameObject(new Blood());
+		blood->Init();
+	}
+	else
+	{
+		blood = bloodPool.front();
+		bloodPool.pop_front();
+		blood->SetActive(true);
+	}
+	blood->Reset(pos);
+	bloodList.push_back(blood);
 }
 
 void SceneGame::Skill()

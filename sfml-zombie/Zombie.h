@@ -1,9 +1,10 @@
 #pragma once
 #include "GameObject.h"
 #include "HitBox.h"
+#include "SceneGame.h"
 
 class Player;
-
+class Blood;
 class Zombie : public GameObject
 {
 public:
@@ -20,10 +21,7 @@ protected:
 	Types type = Types::Bloater;
 
 	sf::Sprite body;
-	sf::Sprite blood;
 	std::string texId;
-
-	sf::Vector2f bloodPos;
 	sf::Vector2f direction;
 
 	int maxHp = 0;
@@ -36,6 +34,8 @@ protected:
 	float attackTimer = 0.f;
 
 	Player* player = nullptr;
+	Blood* blood = nullptr;
+	SceneGame* sceneGame = nullptr;
 
 	HitBox hitBox;
 
@@ -76,7 +76,6 @@ public:
 	}
 
 	void OnDamage(int damage);
-	//void Blood();
 	int GetHp() {return hp;}
 	void SetHp(int hp) { this->hp = hp; }
 };
