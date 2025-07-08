@@ -23,11 +23,15 @@ protected:
 	std::list<Bullet*> bulletList;
 	std::list<Bullet*> bulletPool;
 
-	float shootInterval = 0.1f;
+	float shootInterval = 0.3f;
 	float shootTimer = 0.f;
 
 	int hp = 0;
 	int maxHp = 100;
+
+	const int MAX_MAG = 10;
+	int currentAmmo = 10;
+	int reserveAmmo = 60;
 
 public:
 	bool IsAlive() const { return hp > 0; }
@@ -40,6 +44,9 @@ public:
 	void SetScale(const sf::Vector2f& s) override;
 	void SetOrigin(const sf::Vector2f& o) override;
 	void SetOrigin(Origins preset) override;
+
+	int GetCurrentAmmo() const { return currentAmmo; }
+	int GetReserveAmmo() const { return reserveAmmo; }
 
 	void Init() override;
 	void Release() override;

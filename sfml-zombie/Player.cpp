@@ -116,10 +116,25 @@ void Player::Update(float dt)
 	hitBox.UpdateTransform(body, GetLocalBounds());
 
 	shootTimer += dt;
-	if (InputMgr::GetMouseButton(sf::Mouse::Left) && shootTimer > shootInterval)
+	if (InputMgr::GetMouseButton(sf::Mouse::Left) && shootTimer > shootInterval && currentAmmo > 0)
 	{
 		shootTimer = 0.f;
 		Shoot();
+	}
+
+	if (InputMgr::GetKeyDown(sf::Keyboard::R) && reserveAmmo > 0 && currentAmmo < MAX_MAG)
+	{
+		int reloadAmount = MAX_MAG - currentAmmo;
+		if (reloadAmount <= reserveAmmo)
+		{
+			currentAmmo += reloadAmount;
+			reserveAmmo -= reloadAmount;
+		}
+		else
+		{
+			currentAmmo += reserveAmmo;
+			reserveAmmo = 0;
+		}
 	}
 }
 
@@ -149,6 +164,8 @@ void Player::Shoot()
 
 	bulletList.push_back(bullet);
 	sceneGame->AddGameObject(bullet);
+
+	currentAmmo--;
 }
 
 void Player::OnDamage(int damage) 

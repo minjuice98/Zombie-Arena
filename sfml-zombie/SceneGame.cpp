@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "TileMap.h"
 #include "Zombie.h"
+#include "GameUI.h"
 
 SceneGame::SceneGame() 
 	: Scene(SceneIds::Game)
@@ -11,6 +12,8 @@ SceneGame::SceneGame()
 
 void SceneGame::Init()
 {
+	uiView.setSize(1280.f, 720.f);
+
 	texIds.push_back("graphics/player.png");
 	texIds.push_back("graphics/background_sheet.png");
 	texIds.push_back("graphics/bloater.png");
@@ -28,6 +31,10 @@ void SceneGame::Init()
 		zombie->SetActive(false);
 		zombiePool.push_back(zombie);
 	}
+
+	ui = (GameUI*)AddGameObject(new GameUI());
+	ui->SetPlayer(player);
+	ui->SetStageLevel(stageLevel);
 
 	Scene::Init();
 }

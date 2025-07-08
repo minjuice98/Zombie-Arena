@@ -5,6 +5,10 @@ void Framework::Init(int w, int h, const std::string& t)
 {
 	window.create(sf::VideoMode(w, h), t);
 
+    texIds.push_back("graphics/ammo_icon.png");
+
+    fontIds.push_back("fonts/zombiecontrol.ttf");
+
 	TEXTURE_MGR.Load(texIds);
 	FONT_MGR.Load(fontIds);
 	SOUNDBUFFER_MGR.Load(soundIds);

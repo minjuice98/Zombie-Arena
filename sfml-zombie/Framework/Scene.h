@@ -12,8 +12,8 @@ protected:
 	std::vector<std::string> fontIds;
 	std::vector<std::string> soundIds;
 
-	sf::View uiView;
 	sf::View worldView;
+	sf::View uiView;
 
 	void ApplyPendingChanges();
 
