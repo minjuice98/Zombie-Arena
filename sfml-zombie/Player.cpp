@@ -64,6 +64,7 @@ void Player::Reset()
 	{
 		sceneGame = nullptr;
 	}
+	ui = (GameUI*)sceneGame->FindGameObject("UI");
 
 	for (Bullet* bullet : bulletList)
 	{
@@ -71,7 +72,6 @@ void Player::Reset()
 		bulletPool.push_back(bullet);
 	}
 	bulletList.clear();
-
 
 	body.setTexture(TEXTURE_MGR.Get(texId), true);
 	SetOrigin(Origins::MC);
@@ -139,7 +139,7 @@ void Player::Update(float dt)
 			reserveAmmo = 0;
 		}
 
-		((GameUI*)sceneGame->FindGameObject("UI"))->UpdateAmmoMessage();
+		ui->UpdateAmmoMessage();
 	}
 }
 
@@ -172,7 +172,7 @@ void Player::Shoot()
 
 	currentAmmo--;
 
-	((GameUI*)sceneGame->FindGameObject("UI"))->UpdateAmmoMessage();
+	ui->UpdateAmmoMessage();
 }
 
 void Player::OnDamage(int damage) 
@@ -181,6 +181,7 @@ void Player::OnDamage(int damage)
 		return;
 
 	hp = Utils::Clamp(hp - damage, 0, maxHp);
+	ui->UpdateHpBar(maxHp, hp);
 	if (hp == 0)
 	{
 		SCENE_MGR.ChangeScene(SceneIds::Game);

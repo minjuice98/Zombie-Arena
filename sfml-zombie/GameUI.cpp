@@ -28,7 +28,8 @@ void GameUI::Init()
 	ammoIcon.setPosition({ 10.f,650.f });
 
 	hpBar.setFillColor(sf::Color::Red);
-	hpBar.setPosition({ 300.f,windowSize.y - 20.f });
+	hpBar.setSize({ BAR_SIZE,50.f});
+	hpBar.setPosition({ 300.f,windowSize.y - 45.f });
 	Utils::SetOrigin(hpBar, Origins::ML);
 }
 
@@ -46,6 +47,8 @@ void GameUI::Reset()
 
 	stageInfoMessage.setString("WAVE:" + std::to_string(stageLevel) + "     ZOMBIES:" + std::to_string(0));
 	Utils::SetOrigin(stageInfoMessage, Origins::TL);
+
+	hpBar.setSize({ BAR_SIZE,50.f });
 }
 
 void GameUI::Update(float dt)
@@ -77,4 +80,9 @@ void GameUI::UpdateZombieCountMessage(int zombieCount)
 {
 	stageInfoMessage.setString("WAVE:" + std::to_string(stageLevel) + "     ZOMBIES:" + std::to_string(zombieCount));
 	Utils::SetOrigin(stageInfoMessage, Origins::TL);
+}
+
+void GameUI::UpdateHpBar(int maxHp, int hp)
+{
+	hpBar.setSize({ BAR_SIZE * ((float)hp / maxHp),50.f});
 }

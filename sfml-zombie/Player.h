@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "HitBox.h"
 
+class GameUI;
 class SceneGame;
 class Bullet;
 
@@ -16,6 +17,7 @@ protected:
 
 	float speed = 500.f;
 
+	GameUI* ui = nullptr;
 	SceneGame* sceneGame = nullptr;
 
 	HitBox hitBox;
@@ -27,7 +29,7 @@ protected:
 	float shootTimer = 0.f;
 
 	int hp = 0;
-	int maxHp = 100;
+	int maxHp = 500;
 
 	const int MAX_MAG = 10;
 	const int INITIAL_AMMO = 60;

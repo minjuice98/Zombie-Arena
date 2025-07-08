@@ -18,6 +18,7 @@ protected:
 	std::string fontId = "fonts/zombiecontrol.ttf";
 
 	int stageLevel = 1;
+	const float BAR_SIZE = 300.f;
 
 	Player* player = nullptr;
 
@@ -37,4 +38,5 @@ public:
 	void UpdateAmmoMessage();
 	void UpdateScoreMessage(int s);
 	void UpdateZombieCountMessage(int count);
+	void UpdateHpBar(int maxHp, int hp);
 };
