@@ -122,6 +122,7 @@ void SceneGame::Update(float dt)
 	
 	if (InputMgr::GetMouseButton(sf::Mouse::Button::Right))
 	{
+		std::cout << "우클릭" << std::endl;
 		Skill();
 	}
 
@@ -162,13 +163,6 @@ void SceneGame::SpawnZombies(int count)
 
 void SceneGame::SpawnBlood(const sf::Vector2f& pos)
 {
-	std::cout << "bloodPool size: " << bloodPool.size() << std::endl;
-	for (auto b : bloodPool)
-	{
-		if (b == nullptr)
-			std::cout << "bloodPool contains nullptr!" << std::endl;
-	}
-
 	Blood* blood = nullptr;
 
 	if (bloodPool.empty())
@@ -188,45 +182,23 @@ void SceneGame::SpawnBlood(const sf::Vector2f& pos)
 
 void SceneGame::Skill()
 {
-	auto it = zombieList.begin();
-	while (it != zombieList.end())
+	if (player->GetMp() >= 5)
 	{
-		int hp = 0;
-		if ((*it)->GetActive())
+		std::cout << "Before MP: " << player->GetMp() << std::endl;
+		player->SetMp(0);
+		for (Zombie* zombie : zombieList)
 		{
-			hp = (*it)->GetHp();
-			std::cout << "Before" << (*it)->GetHp() << std::endl;
-			//std::cout << "Skill_HP" << hp << std::endl;
-			hp -= 10;
-			(*it)->SetHp(hp);
-			std::cout << "After" << (*it)->GetHp()<< std::endl;
+			if (zombie->GetActive())
+			{
+				std::cout << "Before HP" << zombie->GetHp() << std::endl;
+				zombie->OnDamage(10);
+				std::cout << "After HP" << zombie->GetHp() << std::endl;
+			}
 		}
-		else {
-			++it;
-		}
+		std::cout << "After MP " << player->GetMp() << std::endl;
 	}
-	////int hp = 0;
-	//for (Zombie* zombie : zombieList)
-	//{
-	//	int hp = 0;
-	//	if (zombie->GetActive()==true)
-	//	{
-	//		/*std::cout << "Before" << zombie->GetHp() << std::endl;
-	//		zombie->OnDamage(10);
-	//		std::cout << "After" << zombie->GetHp() << std::endl;
-	//		break;*/
-
-	//		hp = zombie->GetHp();
-	//		std::cout << "Before" << zombie->GetHp() << std::endl;
-	//		//std::cout << "Skill_HP" << hp << std::endl;
-	//		hp -= 10;
-	//		zombie->SetHp(hp);
-	//		std::cout << "After" << zombie->GetHp() << std::endl;
-	//	}
-	//	else
-	//	{
-
-	//	}
-
-	//}
+	else 
+	{
+		std::cout << "MP 부족 " << player->GetMp() << std::endl;
+	}
 }

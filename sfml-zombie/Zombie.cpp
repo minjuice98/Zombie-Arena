@@ -55,7 +55,7 @@ void Zombie::Release()
 
 void Zombie::Reset()
 {
-	sceneGame = dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene());
+	sceneGame = dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene()); //Áß¿ä
 
 	player = (Player*)SCENE_MGR.GetCurrentScene()->FindGameObject("Player");
 
@@ -128,14 +128,14 @@ void Zombie::SetType(Types type)
 
 void Zombie::OnDamage(int damage)
 {
-	int mp = 0;
 	hp = Utils::Clamp(hp - damage, 0, maxHp);
 	if (hp == 0)
 	{
 		SetActive(false);
 		sceneGame->SpawnBlood(GetPosition());
-		//mp= player->GetMp();
-		//mp += 10;
-		//player->SetMp(mp);
+
+		int mp= player->GetMp();
+		mp += mpUp;
+		player->SetMp(mp);
 	}
 }
