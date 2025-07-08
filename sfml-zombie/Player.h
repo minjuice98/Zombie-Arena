@@ -29,17 +29,31 @@ protected:
 	int hp = 0;
 	int maxHp = 100;
 
+	const int MAX_MAG = 10; //쏠수잇는최대값
+	int currentAmmo = 10; //남아있는값 현재 가지고있는값
+	int resrveAmmo = 60; //가지고있는
+
+
+
 public:
 	bool IsAlive() const { return hp > 0; }
 
 	Player(const std::string& name = "");
 	~Player() override = default;
 
+
 	void SetPosition(const sf::Vector2f& pos) override;
 	void SetRotation(float rot) override;
 	void SetScale(const sf::Vector2f& s) override;
 	void SetOrigin(const sf::Vector2f& o) override;
 	void SetOrigin(Origins preset) override;
+	int GetHp() const { return hp; };
+	void Heal(int amount);
+	int GetResrveAmmo() const{ return resrveAmmo; };
+	void AddResrveAmmo(int ammo);
+	int GetSpeed() const { return speed; };
+	void AddSpeed(int s);
+	 
 
 	void Init() override;
 	void Release() override;

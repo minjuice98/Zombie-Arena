@@ -86,9 +86,9 @@ void SceneGame::Update(float dt)
 
 	worldView.setCenter(player->GetPosition());
 
-	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+	if (InputMgr::GetKeyDown(sf::Keyboard::Space))// 게임시작으로 변경 
 	{
-		SpawnZombies(10);
+		SpawnZombies(10);///////////////////////////////////////////
 	}
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::Return))

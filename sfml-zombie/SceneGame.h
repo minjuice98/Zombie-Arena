@@ -3,6 +3,7 @@
 
 class Player;
 class Zombie;
+class Item;
 
 class SceneGame : public Scene
 {
@@ -11,6 +12,9 @@ protected:
 
 	std::list<Zombie*> zombieList;
 	std::list<Zombie*> zombiePool;
+
+	std::list<Item*> itemList;
+	std::list<Item*> itemPool;
 
 	sf::Sprite cursor;
 
