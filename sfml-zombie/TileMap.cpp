@@ -8,8 +8,8 @@ TileMap::TileMap(const std::string& name)
 
 void TileMap::Set(const sf::Vector2i& count, const sf::Vector2f& size)
 {
-	cellCount = count;
-	cellSize = size;
+	cellCount = count; //타일개수
+	cellSize = size; //타일 크기
 
 	va.clear();
 	va.setPrimitiveType(sf::Quads);
@@ -93,7 +93,7 @@ void TileMap::SetOrigin(Origins preset)
 	GameObject::SetOrigin(preset);
 	if (preset != Origins::Custom)
 	{
-		sf::FloatRect rect;
+		sf::FloatRect rect; //타일맵의 크기를 구하기위한 함수
 		rect.width = cellCount.x * cellSize.x;
 		rect.height = cellCount.y * cellSize.y;
 
@@ -103,12 +103,21 @@ void TileMap::SetOrigin(Origins preset)
 	UpdateTransform();
 }
 
+sf::FloatRect TileMap::GetBounds() const
+{
+	return sf::FloatRect(
+		position.x,
+		position.y,
+		cellCount.x * cellSize.x,
+		cellCount.y * cellSize.y);
+}
+
 void TileMap::Init()
 {
 	sortingLayer = SortingLayers::Background;
 	sortingOrder = 0;
 
-	Set({ 50, 50 }, {50.f, 50.f});
+	Set({ 50, 50 }, { 50.f, 50.f });
 }
 
 void TileMap::Release()

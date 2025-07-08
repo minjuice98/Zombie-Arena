@@ -4,11 +4,13 @@
 class Player;
 class Zombie;
 class Item;
+class TileMap;
 
 class SceneGame : public Scene
 {
 protected:
 	Player* player = nullptr;
+	TileMap* tileMap = nullptr;
 
 	std::list<Zombie*> zombieList;
 	std::list<Zombie*> zombiePool;
@@ -29,10 +31,18 @@ public:
 	void Draw(sf::RenderWindow& window) override;
 
 	void SpawnZombies(int count);
+	void SpawnItems(int count);//좀비가아닌 타임으로 ? 
 
 	const std::list<Zombie*>& GetZombies() const 
 	{
 		return zombieList;
 	}
+
+
+	const std::list<Item*>& GetItems() const
+	{
+		return itemList;
+	}
+
 };
 

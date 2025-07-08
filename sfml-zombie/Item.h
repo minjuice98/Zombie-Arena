@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "HitBox.h"
 
+class Player;
 
 class Item :   public GameObject
 {
@@ -9,7 +10,7 @@ class Item :   public GameObject
 public:
 	enum class Types
 	{
-		Hill,
+		Heal,
 		Ammo,
 		Acceleration,
 	};
@@ -18,7 +19,7 @@ public:
 	static const int TotalTypes = 3;
 
 protected:
-	Types type = Types::Hill;
+	Types type = Types::Heal;
 
 	sf::Sprite item;
 	std::string texId;

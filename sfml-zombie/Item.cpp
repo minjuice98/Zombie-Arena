@@ -55,8 +55,7 @@ void Item::Release()
  
 void Item::Reset()
 { 
-	player = (Player*)SCENE_MGR.GetCurrentScene()->FindGameObject("Player");
-
+	player = (Player*)SCENE_MGR.GetCurrentScene()->FindGameObject("Player");//
 	item.setTexture(TEXTURE_MGR.Get(texId), true);
 	SetOrigin(Origins::MC);
 	SetPosition({ 0.f, 0.f });
@@ -79,7 +78,7 @@ void Item::SetType(Types type)
 	this->type = type;
 	switch (this->type)
 	{
-	case Types::Hill:
+	case Types::Heal:
 		texId = "graphics/health_pickup.png";	
 		break;
 	case Types::Ammo:
