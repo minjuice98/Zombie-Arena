@@ -27,6 +27,7 @@ protected:
 	float shootTimer = 0.f;
 
 	int hp = 0;
+	int mp = 0;
 	int maxHp = 100;
 
 public:
@@ -64,5 +65,7 @@ public:
 
 	void Shoot();
 	void OnDamage(int damage);
-};
 
+	int GetMp() { return mp; };
+	void SetMp(int mp) { this->mp = mp; }
+};

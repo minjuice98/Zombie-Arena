@@ -8,6 +8,7 @@ class SceneGame : public Scene
 {
 protected:
 	Player* player = nullptr;
+	Zombie* zombie = nullptr;
 
 	std::list<Zombie*> zombieList;
 	std::list<Zombie*> zombiePool;
@@ -25,10 +26,10 @@ public:
 	void Draw(sf::RenderWindow& window) override;
 
 	void SpawnZombies(int count);
+	void Skill();
 
 	const std::list<Zombie*>& GetZombies() const 
 	{
 		return zombieList;
 	}
 };
-

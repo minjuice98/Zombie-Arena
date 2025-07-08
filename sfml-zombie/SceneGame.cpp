@@ -18,6 +18,7 @@ void SceneGame::Init()
 	texIds.push_back("graphics/chaser.png");
 	texIds.push_back("graphics/crosshair.png");
 	texIds.push_back("graphics/bullet.png");
+	texIds.push_back("graphics/blood.png");
 
 	AddGameObject(new TileMap("TileMap"));
 	player = (Player*)AddGameObject(new Player("Player"));
@@ -90,6 +91,11 @@ void SceneGame::Update(float dt)
 	{
 		SpawnZombies(10);
 	}
+	
+	if (InputMgr::GetMouseButton(sf::Mouse::Button::Right))
+	{
+		Skill();
+	}
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::Return))
 	{
@@ -100,7 +106,6 @@ void SceneGame::Update(float dt)
 void SceneGame::Draw(sf::RenderWindow& window)
 {
 	Scene::Draw(window);
-
 	window.setView(uiView);
 	window.draw(cursor);
 }
@@ -109,7 +114,6 @@ void SceneGame::SpawnZombies(int count)
 {
 	for (int i = 0; i < count; ++i)
 	{
-		Zombie* zombie = nullptr;
 		if (zombiePool.empty())
 		{
 			zombie = (Zombie*)AddGameObject(new Zombie());
@@ -126,4 +130,49 @@ void SceneGame::SpawnZombies(int count)
 		zombie->SetPosition(Utils::RandomInUnitCircle() * 500.f);
 		zombieList.push_back(zombie);
 	}
+}
+
+void SceneGame::Skill()
+{
+	auto it = zombieList.begin();
+	while (it != zombieList.end())
+	{
+		int hp = 0;
+		if ((*it)->GetActive())
+		{
+			hp = (*it)->GetHp();
+			std::cout << "Before" << (*it)->GetHp() << std::endl;
+			//std::cout << "Skill_HP" << hp << std::endl;
+			hp -= 10;
+			(*it)->SetHp(hp);
+			std::cout << "After" << (*it)->GetHp()<< std::endl;
+		}
+		else {
+			++it;
+		}
+	}
+	////int hp = 0;
+	//for (Zombie* zombie : zombieList)
+	//{
+	//	int hp = 0;
+	//	if (zombie->GetActive()==true)
+	//	{
+	//		/*std::cout << "Before" << zombie->GetHp() << std::endl;
+	//		zombie->OnDamage(10);
+	//		std::cout << "After" << zombie->GetHp() << std::endl;
+	//		break;*/
+
+	//		hp = zombie->GetHp();
+	//		std::cout << "Before" << zombie->GetHp() << std::endl;
+	//		//std::cout << "Skill_HP" << hp << std::endl;
+	//		hp -= 10;
+	//		zombie->SetHp(hp);
+	//		std::cout << "After" << zombie->GetHp() << std::endl;
+	//	}
+	//	else
+	//	{
+
+	//	}
+
+	//}
 }

@@ -88,6 +88,7 @@ void Zombie::Update(float dt)
 void Zombie::Draw(sf::RenderWindow& window)
 {
 	window.draw(body);
+	window.draw(blood);
 	hitBox.Draw(window);
 }
 
@@ -100,22 +101,25 @@ void Zombie::SetType(Types type)
 		texId = "graphics/bloater.png";
 		maxHp = 200;
 		speed = 50;
-		damage = 100.f;
+		damage = 10;
 		attackInterval = 1.f;
+		mpUp = 3;
 		break;
 	case Types::Chaser:
 		texId = "graphics/chaser.png";
 		maxHp = 100;
 		speed = 100.f;
-		damage = 100.f;
+		damage = 10;
 		attackInterval = 1.f;
+		mpUp = 2;
 		break;
 	case Types::Crawler:
 		texId = "graphics/crawler.png";
 		maxHp = 50;
-		speed = 200;
-		damage = 100.f;
+		speed = 500;
+		damage = 10;
 		attackInterval = 1.f;
+		mpUp = 3;
 		break;
 	}
 
@@ -123,9 +127,19 @@ void Zombie::SetType(Types type)
 
 void Zombie::OnDamage(int damage)
 {
+	//blood.setTexture(TEXTURE_MGR.Get("graphics/blood.png"), true);
+	int mp = 0;
 	hp = Utils::Clamp(hp - damage, 0, maxHp);
 	if (hp == 0)
 	{
 		SetActive(false);
+		//bloodPos=GetPosition();
+		//blood.setPosition(bloodPos);
+		mp= player->GetMp();
+		mp += 10;
+
+
+		player->SetMp(mp);
+		
 	}
 }
