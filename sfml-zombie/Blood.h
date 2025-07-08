@@ -10,6 +10,9 @@ protected:
 	sf::Vector2f bloodPos;
 	Zombie* zombie=nullptr;
 
+	float time = 0.f;//누적시간
+	const float maxTime = 10.f; //핏자국 유효시간
+
 public:
 	Blood(const std::string& name = "");
 	virtual ~Blood() = default;

@@ -58,10 +58,16 @@ void Blood::Reset(const sf::Vector2f& pos)
 {
 	blood.setTexture(TEXTURE_MGR.Get(texId), true);
 	SetPosition(pos);
+	time = 0.f;
 }
 
 void Blood::Update(float dt)
 {
+	time += dt;
+	if (time >= maxTime)
+	{
+		SetActive(false);
+	}
 }
 
 void Blood::Draw(sf::RenderWindow& window)
