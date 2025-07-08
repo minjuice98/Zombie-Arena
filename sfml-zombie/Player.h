@@ -30,8 +30,9 @@ protected:
 	int maxHp = 100;
 
 	const int MAX_MAG = 10;
-	int currentAmmo = 10;
-	int reserveAmmo = 60;
+	const int INITIAL_AMMO = 60;
+	int currentAmmo = MAX_MAG;
+	int reserveAmmo = INITIAL_AMMO;
 
 public:
 	bool IsAlive() const { return hp > 0; }

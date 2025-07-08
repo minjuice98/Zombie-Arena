@@ -20,7 +20,6 @@ public:
 	static sf::Color RandomColor(bool opaque = true);
 	static sf::Vector2f RandomPointInRect(const sf::FloatRect& rect);
 
-
 	// Origin
 	static sf::Vector2f SetOrigin(sf::Transformable& obj, Origins preset, const sf::FloatRect bound);
 	static sf::Vector2f SetOrigin(sf::Shape& obj, Origins preset);

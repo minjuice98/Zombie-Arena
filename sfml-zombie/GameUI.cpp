@@ -38,13 +38,13 @@ void GameUI::Release()
 
 void GameUI::Reset()
 {
-	scoreMessage.setString("SCORE:" + std::to_string(score));
+	scoreMessage.setString("SCORE:" + std::to_string(0));
 	Utils::SetOrigin(scoreMessage, Origins::TL);
 
 	ammoMessage.setString(std::to_string(player->GetCurrentAmmo()) + "/" + std::to_string(player->GetReserveAmmo()));
 	Utils::SetOrigin(ammoMessage, Origins::TL);
 
-	stageInfoMessage.setString("WAVE:" + std::to_string(stageLevel) + "     ZOMBIES:" + std::to_string(zombieCount));
+	stageInfoMessage.setString("WAVE:" + std::to_string(stageLevel) + "     ZOMBIES:" + std::to_string(0));
 	Utils::SetOrigin(stageInfoMessage, Origins::TL);
 }
 
@@ -59,4 +59,22 @@ void GameUI::Draw(sf::RenderWindow& window)
 	window.draw(stageInfoMessage);
 	window.draw(ammoIcon);
 	window.draw(hpBar);
+}
+
+void GameUI::UpdateAmmoMessage()
+{
+	ammoMessage.setString(std::to_string(player->GetCurrentAmmo()) + "/" + std::to_string(player->GetReserveAmmo()));
+	Utils::SetOrigin(ammoMessage, Origins::TL);
+}
+
+void GameUI::UpdateScoreMessage(int score)
+{
+	scoreMessage.setString("SCORE:" + std::to_string(score));
+	Utils::SetOrigin(scoreMessage, Origins::TL);
+}
+
+void GameUI::UpdateZombieCountMessage(int zombieCount)
+{
+	stageInfoMessage.setString("WAVE:" + std::to_string(stageLevel) + "     ZOMBIES:" + std::to_string(zombieCount));
+	Utils::SetOrigin(stageInfoMessage, Origins::TL);
 }

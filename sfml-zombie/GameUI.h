@@ -17,8 +17,6 @@ protected:
 	std::string ammoTexId = "graphics/ammo_icon.png";
 	std::string fontId = "fonts/zombiecontrol.ttf";
 
-	int score = 0;
-	int zombieCount = 0;
 	int stageLevel = 1;
 
 	Player* player = nullptr;
@@ -35,4 +33,8 @@ public:
 	void Reset() override;
 	void Update(float dt) override;
 	void Draw(sf::RenderWindow& window) override;
+
+	void UpdateAmmoMessage();
+	void UpdateScoreMessage(int s);
+	void UpdateZombieCountMessage(int count);
 };

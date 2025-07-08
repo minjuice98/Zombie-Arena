@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "SceneGame.h"
 #include "Bullet.h"
+#include "GameUI.h"
 
 Player::Player(const std::string& name)
 	: GameObject(name)
@@ -82,6 +83,8 @@ void Player::Reset()
 
 	shootTimer = 0.f;
 	hp = maxHp;
+	currentAmmo = MAX_MAG;
+	reserveAmmo = INITIAL_AMMO;
 }
 
 void Player::Update(float dt)
@@ -135,6 +138,8 @@ void Player::Update(float dt)
 			currentAmmo += reserveAmmo;
 			reserveAmmo = 0;
 		}
+
+		((GameUI*)sceneGame->FindGameObject("UI"))->UpdateAmmoMessage();
 	}
 }
 
@@ -166,6 +171,8 @@ void Player::Shoot()
 	sceneGame->AddGameObject(bullet);
 
 	currentAmmo--;
+
+	((GameUI*)sceneGame->FindGameObject("UI"))->UpdateAmmoMessage();
 }
 
 void Player::OnDamage(int damage) 

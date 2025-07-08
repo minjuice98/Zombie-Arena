@@ -32,7 +32,7 @@ void SceneGame::Init()
 		zombiePool.push_back(zombie);
 	}
 
-	ui = (GameUI*)AddGameObject(new GameUI());
+	ui = (GameUI*)AddGameObject(new GameUI("UI"));
 	ui->SetPlayer(player);
 	ui->SetStageLevel(stageLevel);
 
@@ -42,6 +42,10 @@ void SceneGame::Init()
 void SceneGame::Enter()
 {
 	FRAMEWORK.GetWindow().setMouseCursorVisible(false);
+
+	stageLevel = 1;
+	score = 0;
+	zombieCount = 0;
 
 	sf::Vector2f windowSize = FRAMEWORK.GetWindowSizeF();
 
@@ -84,6 +88,10 @@ void SceneGame::Update(float dt)
 		{
 			zombiePool.push_back(*it);
 			it = zombieList.erase(it);
+			zombieCount--;
+			score += 10;
+			ui->UpdateScoreMessage(score);
+			ui->UpdateZombieCountMessage(zombieCount);
 		}
 		else
 		{
@@ -132,5 +140,7 @@ void SceneGame::SpawnZombies(int count)
 		zombie->Reset();
 		zombie->SetPosition(Utils::RandomInUnitCircle() * 500.f);
 		zombieList.push_back(zombie);
+		zombieCount++;
 	}
+	ui->UpdateZombieCountMessage(zombieCount);
 }

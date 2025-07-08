@@ -118,7 +118,6 @@ void Zombie::SetType(Types type)
 		attackInterval = 1.f;
 		break;
 	}
-
 }
 
 void Zombie::OnDamage(int damage)

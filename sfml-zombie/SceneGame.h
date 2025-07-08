@@ -17,6 +17,8 @@ protected:
 	sf::Sprite cursor;
 
 	int stageLevel = 1;
+	int score = 0;
+	int zombieCount = 0;
 
 public:
 	SceneGame();
