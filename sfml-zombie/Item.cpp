@@ -52,25 +52,46 @@ void Item::Init()
 void Item::Release()
 {
 }
- 
+
 void Item::Reset()
-{ 
+{
 	player = (Player*)SCENE_MGR.GetCurrentScene()->FindGameObject("Player");//
 	item.setTexture(TEXTURE_MGR.Get(texId), true);
 	SetOrigin(Origins::MC);
 	SetPosition({ 0.f, 0.f });
 	SetRotation(0.f);
 	SetScale({ 1.f, 1.f });
+
+	GenerationTime = 0.f;
 }
 
-void Item::Update(float dt)
+void Item::Update(float dt)//히트박스
 {
+	hitBox.UpdateTransform(item, GetLocalBounds());
+
+	GenerationTime += dt;
+	if (GenerationTime > GenerationInterval)
+	{
+		if (Utils::CheckCollision(hitBox.rect, player->GetHitBox().rect))
+		{
+			this->ActiveType();
+			SetActive(false);
+		}
+
+	}
+
+
+
+
 }
 
 void Item::Draw(sf::RenderWindow& window)
 {
-	window.draw(item);
-	hitBox.Draw(window);
+	if (GenerationTime > GenerationInterval)
+	{
+		window.draw(item);
+		hitBox.Draw(window);
+	}
 }
 
 void Item::SetType(Types type)
@@ -79,7 +100,7 @@ void Item::SetType(Types type)
 	switch (this->type)
 	{
 	case Types::Heal:
-		texId = "graphics/health_pickup.png";	
+		texId = "graphics/health_pickup.png";
 		break;
 	case Types::Ammo:
 		texId = "graphics/ammo_pickup.png";
@@ -91,20 +112,21 @@ void Item::SetType(Types type)
 	}
 }
 
-
-void Item::OnHeal(int heal)
+void Item::ActiveType()
 {
-	player->Heal(heal);
-}
 
-void Item::OnAmmo(int ammo)
-{
-	player->AddResrveAmmo(ammo);
-}
-
-void Item::OnAcceleration(int acceleration)
-{
-	player->AddSpeed(acceleration);
+	switch (type)
+	{
+	case Types::Heal:
+		player->Heal(100);
+		break;
+	case Types::Ammo:
+		player->AddResrveAmmo(10);
+		break;
+	case Types::Acceleration:
+		player->AddSpeed(50);
+		break;
+	}
 }
 
 

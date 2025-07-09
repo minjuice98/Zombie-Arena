@@ -14,7 +14,7 @@ public:
 		Ammo,
 		Acceleration,
 	};
-	//투명화 or 슬로우 가능여부
+	
 
 	static const int TotalTypes = 3;
 
@@ -24,9 +24,9 @@ protected:
 	sf::Sprite item;
 	std::string texId;
 
-	float Generation_Time = 0.f;
+	float GenerationInterval = 10.f;
 	Player* player = nullptr;
-	
+	float GenerationTime = 0.f;
 	HitBox hitBox;
 
 public:	
@@ -62,11 +62,7 @@ public:
 		return hitBox;
 	}
 
-	void OnHeal(int heal);
-
-	void OnAmmo(int ammo);
-
-	void OnAcceleration(int acceleration);
+	void ActiveType();
 
 
 

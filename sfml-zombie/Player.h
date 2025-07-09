@@ -16,6 +16,8 @@ protected:
 
 	float speed = 500.f;
 
+	float MaxSpeed = 550.f;
+
 	SceneGame* sceneGame = nullptr;
 
 	HitBox hitBox;

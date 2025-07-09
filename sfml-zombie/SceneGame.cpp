@@ -33,8 +33,11 @@ void SceneGame::Init()
 		zombie->SetActive(false);
 		zombiePool.push_back(zombie);
 
-		Item* item = (Item*)AddGameObject(new Item());
 
+
+		Item* item = (Item*)AddGameObject(new Item());
+		item->SetActive(false);
+		itemPool.push_back(item);
 	}
 
 	Scene::Init();
@@ -92,12 +95,26 @@ void SceneGame::Update(float dt)
 		}
 	}
 
+	auto It = itemList.begin();
+	while (It != itemList.end())
+	{
+		if (!(*It)->GetActive())
+		{
+			itemPool.push_back(*It);
+			It = itemList.erase(It);
+		}
+		else
+		{
+			++It;
+		}
+	}
+
 	worldView.setCenter(player->GetPosition());
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::Space))// 게임시작으로 변경 
 	{
 		SpawnZombies(10);///////////////////////////////////////////
-		SpawnItems(2);
+		SpawnItems(100);
 	}
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::Return))
@@ -146,20 +163,21 @@ void SceneGame::SpawnItems(int count)
 		Item* item = nullptr;
 		if (itemPool.empty())
 		{
-			item = (Item*)AddGameObject(new Item());//씬에 새로운 좀비를 등록 주소를 좀비주소에
+			item = (Item*)AddGameObject(new Item());
 			item->Init();
 		}
 		else
 		{
 			item = itemPool.front();
 			itemPool.pop_front();
-			item->SetActive(true);/////////////////
+			item->SetActive(true);
 		}
 		item->SetType((Item::Types)Utils::RandomRange(0, Item::TotalTypes));
 		item->Reset();
-		sf::Vector2f pos = Utils::RandomPointInRect(bounds);//이부분 고쳐야함 
+		sf::Vector2f pos = Utils::RandomPointInRect(bounds);
 		item->SetPosition(pos);
 		itemList.push_back(item);
+	
 	}
 
 

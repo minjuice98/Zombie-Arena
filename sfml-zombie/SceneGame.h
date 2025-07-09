@@ -11,6 +11,7 @@ class SceneGame : public Scene
 protected:
 	Player* player = nullptr;
 	TileMap* tileMap = nullptr;
+	
 
 	std::list<Zombie*> zombieList;
 	std::list<Zombie*> zombiePool;
