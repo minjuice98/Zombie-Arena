@@ -4,9 +4,11 @@
 #include "SceneWave1.h"
 #include "SceneWave2.h"
 #include "SceneBoss2.h"
+#include "SceneTitle.h"
 
 void SceneMgr::Init()
 {
+	scenes.push_back(new SceneTitle());
 	scenes.push_back(new SceneGame());
 	scenes.push_back(new SceneWave1());
 	scenes.push_back(new SceneWave2());
