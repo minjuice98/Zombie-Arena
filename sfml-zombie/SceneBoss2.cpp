@@ -3,6 +3,8 @@
 #include "TileMap.h"
 #include "Player.h"
 #include "GameUI.h"
+#include "Zombie.h"
+#include "GameObject.h"
 
 SceneBoss2::SceneBoss2() : SceneGame(SceneIds::Boss)
 {
@@ -10,12 +12,7 @@ SceneBoss2::SceneBoss2() : SceneGame(SceneIds::Boss)
 
 void SceneBoss2::Init()
 {
-	//fontIds.push_back("fonts/DS-DIGIT.ttf");
-	//TextGo* go = new TextGo("fonts/DS-DIGIT.ttf");
-	//go->SetString("Boss");
-	//go->SetCharacterSize(30);
-	//go->SetFillColor(sf::Color::White);
-	//AddGameObject(go);
+	uiView.setSize(1280.f, 720.f);
 
 	texIds.push_back("graphics/player.png");
 	texIds.push_back("graphics/background_sheet.png");	
@@ -39,10 +36,11 @@ void SceneBoss2::Init()
 void SceneBoss2::Enter()
 {
 	FRAMEWORK.GetWindow().setMouseCursorVisible(false);
-	sf::Vector2f windowSize = FRAMEWORK.GetWindowSizeF();
 
 	stageLevel = 1;
 	zombieCount = 0;
+
+	sf::Vector2f windowSize = FRAMEWORK.GetWindowSizeF();
 
 	worldView.setSize(windowSize);
 	worldView.setCenter({ 0.f, 0.f });
@@ -51,6 +49,12 @@ void SceneBoss2::Enter()
 	uiView.setCenter(windowSize * 0.5f);
 
 	Scene::Enter();
+
+	boss.setTexture(TEXTURE_MGR.Get("graphics/Boss.png"));
+	Utils::SetOrigin(boss, Origins::MC);
+	boss.setRotation(30.f); 
+	boss.setPosition({ windowSize.x*0.5f,windowSize.y*0.5f -200.f });
+	
 
 	cursor.setTexture(TEXTURE_MGR.Get("graphics/crosshair.png"));
 	Utils::SetOrigin(cursor, Origins::MC);
@@ -65,6 +69,10 @@ void SceneBoss2::Exit()
 
 void SceneBoss2::Update(float dt)
 {
+	direction = Utils::GetNormal(player->GetPosition() - boss.getPosition());
+	boss.setRotation(Utils::Angle(direction));
+	boss.setPosition(boss.getPosition() + direction * speed * dt);
+
 	cursor.setPosition(ScreenToUi(InputMgr::GetMousePosition()));
 
 	Scene::Update(dt);
@@ -88,4 +96,5 @@ void SceneBoss2::Draw(sf::RenderWindow& window)
 	Scene::Draw(window);
 	window.setView(uiView);
 	window.draw(cursor);
+	window.draw(boss);
 }

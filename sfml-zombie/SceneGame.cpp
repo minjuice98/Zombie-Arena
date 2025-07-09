@@ -298,6 +298,6 @@ void SceneGame::Skill()
 	}
 	else
 	{
-		std::cout << "MP lack" << std::endl;
+		std::cout << "MP lack" << player->GetMp() << std::endl;
 	}
 }
