@@ -140,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Blood.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Framework\Framework.cpp" />
     <ClCompile Include="Framework\GameObject.cpp" />
@@ -149,6 +150,7 @@
     <ClCompile Include="Framework\SpriteGo.cpp" />
     <ClCompile Include="Framework\Scene.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="SceneBoss2.cpp" />
     <ClCompile Include="SceneDev1.cpp" />
     <ClCompile Include="SceneDev2.cpp" />
     <ClCompile Include="Framework\SceneMgr.cpp" />
@@ -163,6 +165,7 @@
     <ClCompile Include="Zombie.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Blood.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Framework\Framework.h" />
     <ClInclude Include="Framework\Defines.h" />
@@ -174,6 +177,7 @@
     <ClInclude Include="Framework\Scene.h" />
     <ClInclude Include="HitBox.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="SceneBoss2.h" />
     <ClInclude Include="SceneDev1.h" />
     <ClInclude Include="SceneDev2.h" />
     <ClInclude Include="Framework\SceneMgr.h" />
