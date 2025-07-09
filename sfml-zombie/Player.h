@@ -94,4 +94,6 @@ public:
 
 	int GetMp() { return mp; };
 	void SetMp(int mp) { this->mp = mp; }
+
+	const std::list<Bullet*>& GetBullets() const { return bulletList; }
 };

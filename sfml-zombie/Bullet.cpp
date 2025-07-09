@@ -2,6 +2,7 @@
 #include "Bullet.h"
 #include "SceneGame.h"
 #include "Zombie.h"
+#include "SceneBoss2.h"
 
 Bullet::Bullet(const std::string& name)
 	: GameObject(name)
@@ -72,14 +73,32 @@ void Bullet::Update(float dt)
 	SetPosition(position + direction * speed * dt);
 	hitBox.UpdateTransform(body, GetLocalBounds());
 
-	const auto& list = sceneGame->GetZombies();
-	for (const auto zombie : list)
+	// 보스 씬인지 확인
+	SceneBoss2* bossScene = dynamic_cast<SceneBoss2*>(sceneGame);
+	if (bossScene)
 	{
-		if (Utils::CheckCollision(hitBox.rect, zombie->GetHitBox().rect))
+		const auto& list = sceneGame->GetZombies();
+		for (const auto zombie : list)
 		{
-			SetActive(false);
-			zombie->OnDamage(damage);
-			break;
+			if (Utils::CheckCollision(hitBox.rect, zombie->GetHitBox().rect))
+			{
+				SetActive(false);
+				zombie->OnDamage(damage);
+				break;
+			}
+		}
+	}
+	else
+	{
+		const auto& list = sceneGame->GetZombies();
+		for (const auto zombie : list)
+		{
+			if (Utils::CheckCollision(hitBox.rect, zombie->GetHitBox().rect))
+			{
+				SetActive(false);
+				zombie->OnDamage(damage);
+				break;
+			}
 		}
 	}
 }

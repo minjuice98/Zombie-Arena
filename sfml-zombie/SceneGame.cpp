@@ -111,7 +111,6 @@ void SceneGame::Exit()
 	}
 	itemList.clear();
 
-
 	Scene::Exit();
 }
 
