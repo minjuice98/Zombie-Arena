@@ -84,6 +84,13 @@ void SceneBoss2::Update(float dt)
 	{
 		SceneGame::Update(dt);
 
+		// 플레이어 사망 체크 추가
+		if (player->GetHp() <= 0)
+		{
+			SCENE_MGR.ChangeScene(SceneIds::GameOver);
+			return;
+		}
+
 		if (hp > 0)
 		{
 			direction = Utils::GetNormal(player->GetPosition() - boss.getPosition());
@@ -120,15 +127,13 @@ void SceneBoss2::Update(float dt)
 					player->SetMp(0);
 					ui->UpdateManaMessage(0);
 
-					// 보스 데미지
 					OnDamage(200);
 
-					// 모든 좀비에게 데미지
 					for (auto zombie : zombieList)
 					{
-						if (zombie->GetActive())  // 좀비가 살아있을 때만
+						if (zombie->GetActive())
 						{
-							zombie->OnDamage(200);  // 또는 원하는 데미지
+							zombie->OnDamage(200);
 						}
 					}
 				}
