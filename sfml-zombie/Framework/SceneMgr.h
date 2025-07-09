@@ -12,6 +12,7 @@ protected:
 	SceneIds startScene = SceneIds::Wave1;
 	SceneIds currentScene = SceneIds::None;
 	SceneIds nextScene = SceneIds::None;
+	
 
 public:
 	void Init();

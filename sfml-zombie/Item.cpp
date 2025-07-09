@@ -58,35 +58,35 @@ void Item::Reset()
 	player = (Player*)SCENE_MGR.GetCurrentScene()->FindGameObject("Player");
 	item.setTexture(TEXTURE_MGR.Get(texId), true);
 	SetOrigin(Origins::MC);
-	SetPosition({ 0.f, 0.f });
 	SetRotation(0.f);
 	SetScale({ 1.f, 1.f });
-
-	GenerationTime = 0.f;
+	
+	Duration = 8.f;
 }
 
-void Item::Update(float dt)//È÷Æ®¹Ú½º
+void Item::Update(float dt)//ï¿½ï¿½Æ®ï¿½Ú½ï¿½
 {
 	hitBox.UpdateTransform(item, GetLocalBounds());
-
-	GenerationTime += dt;
-	if (GenerationTime > GenerationInterval)
+	Duration -= dt;
+	if (Utils::CheckCollision(hitBox.rect, player->GetHitBox().rect))
 	{
-		if (Utils::CheckCollision(hitBox.rect, player->GetHitBox().rect))
-		{
-			this->ActiveType();
-			SetActive(false);
-		}
+		ActiveType();
+		SetActive(false);
+	}
+	else if (Duration <= 0.f)
+	{
+		SetActive(false);
 	}
 }
+
+
+
+
 
 void Item::Draw(sf::RenderWindow& window)
 {
-	if (GenerationTime > GenerationInterval)
-	{
-		window.draw(item);
-		hitBox.Draw(window);
-	}
+	window.draw(item);
+	hitBox.Draw(window);
 }
 
 void Item::SetType(Types type)

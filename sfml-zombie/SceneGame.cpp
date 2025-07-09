@@ -103,15 +103,24 @@ void SceneGame::Exit()
 	}
 	bloodList.clear();
 
+	for (Item* item : itemList)
+	{
+		item->SetActive(false);
+		itemPool.push_back(item);
+	}
+	itemList.clear();
+
+
 	Scene::Exit();
 }
 
 void SceneGame::Update(float dt)
 {
 	cursor.setPosition(ScreenToUi(InputMgr::GetMousePosition()));
-
+	GenerationTime += dt;
 	Scene::Update(dt);
 
+	SpawnItems(30);
 	auto it = zombieList.begin();
 	while (it != zombieList.end())
 	{
@@ -133,21 +142,6 @@ void SceneGame::Update(float dt)
 			++it;
 		}
 	}
-
-	auto it2 = bloodList.begin();
-	while (it2 != bloodList.end())
-	{
-		if (!(*it2)->GetActive())
-		{
-			bloodPool.push_back(*it2);
-			it2 = bloodList.erase(it2);
-		}
-		else
-		{
-			++it2;			
-		}
-	}
-
 	auto It = itemList.begin();
 	while (It != itemList.end())
 	{
@@ -161,6 +155,21 @@ void SceneGame::Update(float dt)
 			++It;
 		}
 	}
+
+	auto it2 = bloodList.begin();
+	while (it2 != bloodList.end())
+	{
+		if (!(*it2)->GetActive())
+		{
+			bloodPool.push_back(*it2);
+			it2 = bloodList.erase(it2);
+		}
+		else
+		{
+			++it2;
+		}
+	}
+
 
 	worldView.setCenter(player->GetPosition());
 
@@ -220,7 +229,7 @@ void SceneGame::StageClear()
 }
 
 void SceneGame::SpawnItems(int count)
-{
+{	
 	sf::FloatRect bounds = map->GetBounds();
 	bounds.left -= bounds.width * 0.5f;
 	bounds.top -= bounds.height * 0.5f;
@@ -236,8 +245,12 @@ void SceneGame::SpawnItems(int count)
 		else
 		{
 			item = itemPool.front();
-			itemPool.pop_front();
-			item->SetActive(true);
+			itemPool.pop_front();		
+			if (GenerationTime >= GenerationInterval)
+			{
+				item->SetActive(true);
+				GenerationTime = 0.f;
+			}
 		}
 		item->SetType((Item::Types)Utils::RandomRange(0, Item::TotalTypes));
 		item->Reset();
