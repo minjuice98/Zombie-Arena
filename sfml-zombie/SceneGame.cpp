@@ -132,6 +132,7 @@ void SceneGame::Update(float dt)
 			zombieCount--;
 			score += 10;
 			ui->UpdateScoreMessage(score);
+			ui->UpdateManaMessage(player->GetMp());
 			ui->UpdateZombieCountMessage(zombieCount);
 			if (zombieCount == 0)
 			{
@@ -300,20 +301,17 @@ void SceneGame::SpawnBlood(const sf::Vector2f& pos)
 
 void SceneGame::Skill()
 {
-	if (player->GetMp() >= 5)
+	if (player->GetMp() >= 4)
 	{
-		std::cout << "Before MP: " << player->GetMp() << std::endl;
 		player->SetMp(0);
+		ui->UpdateManaMessage(0);
 		for (Zombie* zombie : zombieList)
 		{
 			if (zombie->GetActive())
 			{
-				std::cout << "Before HP" << zombie->GetHp() << std::endl;
-				zombie->OnDamage(10);
-				std::cout << "After HP" << zombie->GetHp() << std::endl;
+				zombie->OnDamage(100);
 			}
 		}
-		std::cout << "After MP " << player->GetMp() << std::endl;
 	}
 	else
 	{
