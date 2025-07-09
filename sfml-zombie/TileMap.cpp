@@ -8,8 +8,8 @@ TileMap::TileMap(const std::string& name)
 
 void TileMap::Set(const sf::Vector2i& count, const sf::Vector2f& size)
 {
-	cellCount = count; //Ÿ�ϰ���
-	cellSize = size; //Ÿ�� ũ��
+	cellCount = count; 
+	cellSize = size;
 
 	va.clear();
 	va.setPrimitiveType(sf::Quads);

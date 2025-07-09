@@ -60,7 +60,6 @@ public:
 	void Draw(sf::RenderWindow& window) override;
 
 	void SetType(Types type);
-	void BossType();
 
 	sf::FloatRect GetLocalBounds() const override
 	{

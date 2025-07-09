@@ -33,4 +33,3 @@ public:
 
 	void SetSize(sf::Vector2i count) { cellCount = count; }
 };
-

@@ -8,7 +8,6 @@
 Player::Player(const std::string& name)
 	: GameObject(name)
 {
-
 }
 
 void Player::SetPosition(const sf::Vector2f& pos)
@@ -97,6 +96,7 @@ void Player::Reset()
 	body.setTexture(TEXTURE_MGR.Get(texId), true);
 	SetOrigin(Origins::MC);
 	SetPosition({ 0.f, 0.f });
+	SetPosition(FRAMEWORK.GetWindowSizeF() * 0.5f);
 	SetRotation(0.f);
 
 	direction = { 0.f, 0.f };

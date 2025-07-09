@@ -63,7 +63,6 @@ public:
 	float GetSpeed() const { return speed; };
 	void AddSpeed(int s);
 	 
-
 	int GetCurrentAmmo() const { return currentAmmo; }
 	int GetReserveAmmo() const { return reserveAmmo; }
 

@@ -211,7 +211,6 @@ bool Utils::CheckCollision(const sf::Sprite& shapeA, const sf::Sprite& shapeB)
     return PolygonsIntersect(pointsA, shapeA.getTransform(), pointsB, shapeB.getTransform());
 }
 
-
 bool Utils::CheckCollision(const sf::RectangleShape& shapeA, const sf::RectangleShape& shapeB)
 {
     if (!shapeA.getGlobalBounds().intersects(shapeB.getGlobalBounds()))

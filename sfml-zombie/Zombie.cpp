@@ -43,7 +43,7 @@ void Zombie::SetOrigin(Origins preset)
 
 void Zombie::Init()
 {
-	sortingLayer = SortingLayers::Foreground;//��׶��� ���� �׸��ٴ�.
+	sortingLayer = SortingLayers::Foreground;
 	sortingOrder = 0;
 
 	SetType(type);
@@ -124,17 +124,6 @@ void Zombie::SetType(Types type)
 		mpUp = 3;
 		break;
 	}
-}
-
-void Zombie::BossType()
-{
-	name = "Boss";
-	texId = "graphics/Boss.png";
-	maxHp = 1000;
-	speed = 75.f;
-	damage = 50.f;
-	attackInterval = 1.f;
-	//mpUp = 3;
 }
 
 void Zombie::OnDamage(int damage)

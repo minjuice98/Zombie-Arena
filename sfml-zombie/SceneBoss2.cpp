@@ -12,19 +12,12 @@ SceneBoss2::SceneBoss2() : SceneGame(SceneIds::Boss)
 
 void SceneBoss2::Init()
 {
-	uiView.setSize(1280.f, 720.f);
+	SceneGame::Init();
 
-	texIds.push_back("graphics/player.png");
-	texIds.push_back("graphics/background_sheet.png");	
-	texIds.push_back("graphics/bullet.png");
-	texIds.push_back("graphics/crosshair.png");
 	texIds.push_back("graphics/Boss.png");
 
-	map = (TileMap*)AddGameObject(new TileMap("TileMap"));
 	map->SetSize({ 30,30 });
-
-	AddGameObject(new TileMap("TileMap"));
-	player = (Player*)AddGameObject(new Player("Player"));
+	map->Init();
 
 	ui = (GameUI*)AddGameObject(new GameUI("UI"));
 	ui->SetPlayer(player);
@@ -35,54 +28,51 @@ void SceneBoss2::Init()
 
 void SceneBoss2::Enter()
 {
-	FRAMEWORK.GetWindow().setMouseCursorVisible(false);
+	SceneGame::Enter();
 
-	stageLevel = 1;
-	zombieCount = 0;
-
-	sf::Vector2f windowSize = FRAMEWORK.GetWindowSizeF();
-
-	worldView.setSize(windowSize);
-	worldView.setCenter({ 0.f, 0.f });
-
-	uiView.setSize(windowSize);
-	uiView.setCenter(windowSize * 0.5f);
+	stageLevel = 3;
 
 	Scene::Enter();
 
+	sf::Vector2f windowSize = FRAMEWORK.GetWindowSizeF();
 	boss.setTexture(TEXTURE_MGR.Get("graphics/Boss.png"));
 	Utils::SetOrigin(boss, Origins::MC);
-	boss.setRotation(30.f); 
+	boss.setRotation(60.f); 
 	boss.setPosition({ windowSize.x*0.5f,windowSize.y*0.5f -200.f });
-	
-
-	cursor.setTexture(TEXTURE_MGR.Get("graphics/crosshair.png"));
-	Utils::SetOrigin(cursor, Origins::MC);
 }
 
 void SceneBoss2::Exit()
 {
-	FRAMEWORK.GetWindow().setMouseCursorVisible(true);
-
+	SceneGame::Exit();
 	Scene::Exit();
 }
 
 void SceneBoss2::Update(float dt)
 {
-	direction = Utils::GetNormal(player->GetPosition() - boss.getPosition());
-	boss.setRotation(Utils::Angle(direction));
-	boss.setPosition(boss.getPosition() + direction * speed * dt);
-
 	cursor.setPosition(ScreenToUi(InputMgr::GetMousePosition()));
-
+	GenerationTime += dt;
 	Scene::Update(dt);
 
 	worldView.setCenter(player->GetPosition());
 
-	if (InputMgr::GetMouseButton(sf::Mouse::Button::Right))
+	//sf::Vector2f dir = player->GetPosition() - boss.getPosition();
+	//sf::Vector2f direction = Utils::GetNormal(dir);
+	//boss.setRotation(Utils::Angle(direction));
+	//boss.setPosition(boss.getPosition() + direction * speed * dt);
+
+	direction = Utils::GetNormal(player->GetPosition() - boss.getPosition());
+	
+	std::cout << "Boss pos" << boss.getPosition().x << ","<<boss.getPosition().y << std::endl;
+	std::cout << "Player pos" << player->GetPosition().x << "," << player->GetPosition().y << std::endl;
+	std::cout << "direction" << direction.x << "," << direction.y << std::endl;
+
+	boss.setRotation(Utils::Angle(direction));
+	boss.setPosition(boss.getPosition() + direction * speed * dt);
+
+	if (InputMgr::GetMouseButtonDown(sf::Mouse::Right))
 	{
-		std::cout << "¿ìÅ¬¸¯" << std::endl;
-		SceneGame::Skill();
+		std::cout << "Skill Use" << std::endl;
+		Skill();
 	}
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::Return))
@@ -93,8 +83,21 @@ void SceneBoss2::Update(float dt)
 
 void SceneBoss2::Draw(sf::RenderWindow& window)
 {
-	Scene::Draw(window);
-	window.setView(uiView);
-	window.draw(cursor);
+	SceneGame::Draw(window);
+	window.setView(worldView);
 	window.draw(boss);
+}
+
+void SceneBoss2::onDamage(int damage)
+{
+	hp = Utils::Clamp(hp - damage, 0, maxHp);
+	if (hp == 0)
+	{
+		//delete boss;
+		//sceneGame->SpawnBlood(GetPosition());
+
+		//int mp = player->GetMp();
+		//mp += mpUp;
+		//player->SetMp(mp);
+	}
 }
