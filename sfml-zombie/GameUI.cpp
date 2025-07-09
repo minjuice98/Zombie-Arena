@@ -25,6 +25,11 @@ void GameUI::Init()
 	stageInfoMessage.setFont(FONT_MGR.Get(fontId));
 	stageInfoMessage.setPosition({ 840.f,650.f });
 
+	manaMessage.setCharacterSize(50);
+	manaMessage.setFont(FONT_MGR.Get(fontId));
+	manaMessage.setFillColor(sf::Color::Blue);
+	manaMessage.setPosition({ 1100.f,600.f });
+
 	ammoIcon.setTexture(TEXTURE_MGR.Get(ammoTexId));
 	ammoIcon.setPosition({ 10.f,650.f });
 
@@ -49,6 +54,9 @@ void GameUI::Reset()
 	stageInfoMessage.setString("WAVE:" + std::to_string(stageLevel) + "     ZOMBIES:" + std::to_string(0));
 	Utils::SetOrigin(stageInfoMessage, Origins::TL);
 
+	manaMessage.setString("MANA:" + std::to_string(0));
+	Utils::SetOrigin(manaMessage, Origins::TL);
+
 	hpBar.setSize({ BAR_SIZE,50.f });
 }
 
@@ -63,6 +71,7 @@ void GameUI::Draw(sf::RenderWindow& window)
 	window.draw(stageInfoMessage);
 	window.draw(ammoIcon);
 	window.draw(hpBar);
+	window.draw(manaMessage);
 }
 
 void GameUI::UpdateAmmoMessage()
@@ -86,4 +95,10 @@ void GameUI::UpdateZombieCountMessage(int zombieCount)
 void GameUI::UpdateHpBar(int maxHp, int hp)
 {
 	hpBar.setSize({ BAR_SIZE * ((float)hp / maxHp),50.f});
+}
+
+void GameUI::UpdateManaMessage(int mp)
+{
+	manaMessage.setString("MANA:" + std::to_string(mp));
+	Utils::SetOrigin(manaMessage, Origins::TL);
 }

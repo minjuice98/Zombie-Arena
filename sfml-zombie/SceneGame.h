@@ -33,7 +33,6 @@ protected:
 	float GenerationInterval = 3.f;	
 	float GenerationTime = 0.f;
 
-
 public:
 	static int score;
 	SceneGame();
@@ -65,4 +64,6 @@ public:
 	{
 		return itemList;
 	}
+
+	void ApplyUpgrade();
 };

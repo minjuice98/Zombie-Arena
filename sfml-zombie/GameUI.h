@@ -9,6 +9,7 @@ protected:
 	sf::Text scoreMessage;
 	sf::Text ammoMessage;
 	sf::Text stageInfoMessage;
+	sf::Text manaMessage;
 
 	sf::Sprite ammoIcon;
 
@@ -39,4 +40,5 @@ public:
 	void UpdateScoreMessage(int s);
 	void UpdateZombieCountMessage(int count);
 	void UpdateHpBar(int maxHp, int hp);
+	void UpdateManaMessage(int mp);
 };

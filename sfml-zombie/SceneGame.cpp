@@ -79,6 +79,7 @@ void SceneGame::Enter()
 	uiView.setSize(windowSize);
 	uiView.setCenter(windowSize * 0.5f);
 
+	ApplyUpgrade();
 	Scene::Enter();
 
 	cursor.setTexture(TEXTURE_MGR.Get("graphics/crosshair.png"));
@@ -131,6 +132,7 @@ void SceneGame::Update(float dt)
 			zombieCount--;
 			score += 10;
 			ui->UpdateScoreMessage(score);
+			ui->UpdateManaMessage(player->GetMp());
 			ui->UpdateZombieCountMessage(zombieCount);
 			if (zombieCount == 0)
 			{
@@ -169,7 +171,6 @@ void SceneGame::Update(float dt)
 			++it2;
 		}
 	}
-
 
 	worldView.setCenter(player->GetPosition());
 
@@ -225,7 +226,26 @@ void SceneGame::SpawnZombies(int count)
 
 void SceneGame::StageClear()
 {
-	SCENE_MGR.ChangeScene((SceneIds)((int)Id + 1));
+	SceneUpgrade::nextSceneId = (SceneIds)((int)Id + 1);
+	SCENE_MGR.ChangeScene(SceneIds::Upgrade);
+}
+
+void SceneGame::ApplyUpgrade()
+{
+	for (int i = 0; i < SceneUpgrade::hpUpgradeCount; ++i)
+	{
+		player->MaxHpUp(50);
+	}
+
+	for (int i = 0; i < SceneUpgrade::speedUpgradeCount; ++i)
+	{
+		player->AddSpeed(50.f);
+	}
+
+	for (int i = 0; i < SceneUpgrade::pickupUpgradeCount; ++i)
+	{
+		GenerationInterval -= 0.6f;
+	}
 }
 
 void SceneGame::SpawnItems(int count)
@@ -281,20 +301,17 @@ void SceneGame::SpawnBlood(const sf::Vector2f& pos)
 
 void SceneGame::Skill()
 {
-	if (player->GetMp() >= 5)
+	if (player->GetMp() >= 4)
 	{
-		std::cout << "Before MP: " << player->GetMp() << std::endl;
 		player->SetMp(0);
+		ui->UpdateManaMessage(0);
 		for (Zombie* zombie : zombieList)
 		{
 			if (zombie->GetActive())
 			{
-				std::cout << "Before HP" << zombie->GetHp() << std::endl;
-				zombie->OnDamage(10);
-				std::cout << "After HP" << zombie->GetHp() << std::endl;
+				zombie->OnDamage(100);
 			}
 		}
-		std::cout << "After MP " << player->GetMp() << std::endl;
 	}
 	else
 	{
