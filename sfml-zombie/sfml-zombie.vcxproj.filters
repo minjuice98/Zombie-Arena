@@ -76,6 +76,10 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="SceneWave1.cpp">
+    <ClCompile Include="Blood.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneBoss2.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -143,6 +147,10 @@
     <ClInclude Include="Variables.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Blood.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneBoss2.h">
     <ClInclude Include="GameUI.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>

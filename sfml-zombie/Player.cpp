@@ -108,7 +108,6 @@ void Player::Update(float dt)
 	sf::Vector2f mouseWorldPos = sceneGame->ScreenToWorld(mousePos);
 	look = Utils::GetNormal(mouseWorldPos - GetPosition());
 	SetRotation(Utils::Angle(look));
-
 	hitBox.UpdateTransform(body, GetLocalBounds());
 
 	shootTimer += dt;

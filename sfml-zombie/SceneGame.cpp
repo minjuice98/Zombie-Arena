@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "TileMap.h"
 #include "Zombie.h"
+#include "Blood.h"
 #include "GameUI.h"
 
 SceneGame::SceneGame() 
@@ -26,6 +27,7 @@ void SceneGame::Init()
 	texIds.push_back("graphics/chaser.png");
 	texIds.push_back("graphics/crosshair.png");
 	texIds.push_back("graphics/bullet.png");
+	texIds.push_back("graphics/blood.png");
 
 	AddGameObject(new TileMap("TileMap"));
 	player = (Player*)AddGameObject(new Player("Player"));
@@ -37,6 +39,12 @@ void SceneGame::Init()
 		zombiePool.push_back(zombie);
 	}
 
+	for (int i = 0; i < 50; ++i)
+	{
+		Blood* blood = (Blood*)AddGameObject(new Blood());
+		blood->SetActive(false);
+		bloodPool.push_back(blood);
+	}
 	ui = (GameUI*)AddGameObject(new GameUI("UI"));
 	ui->SetPlayer(player);
 	ui->SetStageLevel(stageLevel);
@@ -77,6 +85,13 @@ void SceneGame::Exit()
 	}
 	zombieList.clear();
 
+	for (Blood* blood : bloodList)
+	{
+		blood->SetActive(false);
+		bloodPool.push_back(blood);
+	}
+	bloodList.clear();
+
 	Scene::Exit();
 }
 
@@ -104,23 +119,42 @@ void SceneGame::Update(float dt)
 		}
 	}
 
+	auto it2 = bloodList.begin();
+	while (it2 != bloodList.end())
+	{
+		if (!(*it2)->GetActive())
+		{
+			bloodPool.push_back(*it2);
+			it2 = bloodList.erase(it2);
+		}
+		else
+		{
+			++it2;
+		}
+	}
+
 	worldView.setCenter(player->GetPosition());
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 	{
 		SpawnZombies(10, 500.f);
 	}
+	
+	if (InputMgr::GetMouseButton(sf::Mouse::Button::Right))
+	{
+		std::cout << "��Ŭ��" << std::endl;
+		Skill();
+	}
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::Return))
 	{
-		SCENE_MGR.ChangeScene(SceneIds::Game);
+		SCENE_MGR.ChangeScene(SceneIds::Boss);
 	}
 }
 
 void SceneGame::Draw(sf::RenderWindow& window)
 {
 	Scene::Draw(window);
-
 	window.setView(uiView);
 	window.draw(cursor);
 }
@@ -129,7 +163,6 @@ void SceneGame::SpawnZombies(int count, float radius)
 {
 	for (int i = 0; i < count; ++i)
 	{
-		Zombie* zombie = nullptr;
 		if (zombiePool.empty())
 		{
 			zombie = (Zombie*)AddGameObject(new Zombie());
@@ -148,4 +181,46 @@ void SceneGame::SpawnZombies(int count, float radius)
 		zombieCount++;
 	}
 	ui->UpdateZombieCountMessage(zombieCount);
+}
+
+void SceneGame::SpawnBlood(const sf::Vector2f& pos)
+{
+	Blood* blood = nullptr;
+
+	if (bloodPool.empty())
+	{
+		blood = (Blood*)AddGameObject(new Blood());
+		blood->Init();
+	}
+	else
+	{
+		blood = bloodPool.front();
+		bloodPool.pop_front();
+		blood->SetActive(true);
+	}
+	blood->Reset(pos);
+	bloodList.push_back(blood);
+}
+
+void SceneGame::Skill()
+{
+	if (player->GetMp() >= 5)
+	{
+		std::cout << "Before MP: " << player->GetMp() << std::endl;
+		player->SetMp(0);
+		for (Zombie* zombie : zombieList)
+		{
+			if (zombie->GetActive())
+			{
+				std::cout << "Before HP" << zombie->GetHp() << std::endl;
+				zombie->OnDamage(10);
+				std::cout << "After HP" << zombie->GetHp() << std::endl;
+			}
+		}
+		std::cout << "After MP " << player->GetMp() << std::endl;
+	}
+	else 
+	{
+		std::cout << "MP ���� " << player->GetMp() << std::endl;
+	}
 }

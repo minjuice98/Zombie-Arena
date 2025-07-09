@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Zombie.h"
 #include "Player.h"
+#include "Blood.h"
 
 Zombie::Zombie(const std::string& name)
 	: GameObject(name)
@@ -54,6 +55,8 @@ void Zombie::Release()
 
 void Zombie::Reset()
 {
+	sceneGame = dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene()); //�߿�
+
 	player = (Player*)SCENE_MGR.GetCurrentScene()->FindGameObject("Player");
 
 	body.setTexture(TEXTURE_MGR.Get(texId), true);
@@ -102,6 +105,7 @@ void Zombie::SetType(Types type)
 		speed = 50.f;
 		damage = 40.f;
 		attackInterval = 1.f;
+		mpUp = 3;
 		break;
 	case Types::Chaser:
 		texId = "graphics/chaser.png";
@@ -109,6 +113,7 @@ void Zombie::SetType(Types type)
 		speed = 100.f;
 		damage = 30.f;
 		attackInterval = 1.f;
+		mpUp = 2;
 		break;
 	case Types::Crawler:
 		texId = "graphics/crawler.png";
@@ -116,6 +121,7 @@ void Zombie::SetType(Types type)
 		speed = 75.f;
 		damage = 20.f;
 		attackInterval = 1.f;
+		mpUp = 3;
 		break;
 	}
 }
@@ -126,5 +132,10 @@ void Zombie::OnDamage(int damage)
 	if (hp == 0)
 	{
 		SetActive(false);
+		sceneGame->SpawnBlood(GetPosition());
+
+		int mp= player->GetMp();
+		mp += mpUp;
+		player->SetMp(mp);
 	}
 }

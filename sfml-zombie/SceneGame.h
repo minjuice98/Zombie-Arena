@@ -3,6 +3,7 @@
 
 class Player;
 class Zombie;
+class Blood;
 class GameUI;
 class TileMap;
 
@@ -12,9 +13,13 @@ protected:
 	Player* player = nullptr;
 	GameUI* ui = nullptr;
 	TileMap* map = nullptr;
+	Zombie* zombie = nullptr;
 
 	std::list<Zombie*> zombieList;
 	std::list<Zombie*> zombiePool;
+
+	std::list<Blood*> bloodList;
+	std::list<Blood*> bloodPool;
 
 	sf::Sprite cursor;
 
@@ -23,6 +28,8 @@ protected:
 	int zombieCount = 0;
 
 public:
+	SceneIds Id;
+
 	SceneGame();
 	SceneGame(SceneIds id);
 	~SceneGame() override = default;
@@ -33,11 +40,17 @@ public:
 	void Update(float dt) override;
 	void Draw(sf::RenderWindow& window) override;
 
+	void SpawnZombies(int count);
+	void SpawnBlood(const sf::Vector2f& pos);
+	void Skill();
 	void SpawnZombies(int count, float radius);
 
 	const std::list<Zombie*>& GetZombies() const 
 	{
 		return zombieList;
 	}
+	const std::list<Blood*>& GetBlood() const
+	{
+		return bloodList;
+	}
 };
-
