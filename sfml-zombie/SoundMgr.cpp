@@ -1,6 +1,14 @@
 #include "stdafx.h"
 #include "SoundMgr.h"
 
+sf::Sound SoundMgr::hit;
+sf::Sound SoundMgr::pickUp;
+sf::Sound SoundMgr::powerUp;
+sf::Sound SoundMgr::reload;
+sf::Sound SoundMgr::reloadFailed;
+sf::Sound SoundMgr::shoot;
+sf::Sound SoundMgr::splat;
+
 void SoundMgr::Init()
 {
 	hit.setBuffer(SOUNDBUFFER_MGR.Get("sound/hit.wav"));
