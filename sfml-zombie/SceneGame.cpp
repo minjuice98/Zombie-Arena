@@ -7,6 +7,8 @@
 #include "GameUI.h"
 #include "Item.h"
 
+int SceneGame::score = 0;
+
 SceneGame::SceneGame()
 	: Scene(SceneIds::Game)
 {
@@ -67,7 +69,6 @@ void SceneGame::Enter()
 	FRAMEWORK.GetWindow().setMouseCursorVisible(false);
 
 	stageLevel = 1;
-	score = 0;
 	zombieCount = 0;
 
 	sf::Vector2f windowSize = FRAMEWORK.GetWindowSizeF();
@@ -176,6 +177,7 @@ void SceneGame::Update(float dt)
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::Return))
 	{
+		score = 0;
 		SCENE_MGR.ChangeScene(Id);
 	}
 }

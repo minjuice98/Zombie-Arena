@@ -28,10 +28,11 @@ protected:
 	sf::Sprite cursor;
 
 	int stageLevel = 1;
-	int score = 0;
 	int zombieCount = 0;
 
 public:
+	static int score;
+
 	SceneGame();
 	SceneGame(SceneIds id);
 	~SceneGame() override = default;

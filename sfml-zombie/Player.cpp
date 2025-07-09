@@ -51,11 +51,13 @@ void Player::Heal(int amount)
 	{
 		hp = maxHp;
 	}
+	ui->UpdateHpBar(maxHp, hp);
 }
 
 void Player::AddResrveAmmo(int ammo)
 {
 	reserveAmmo += ammo;
+	ui->UpdateAmmoMessage();
 }
 
 void Player::AddSpeed(int s)
@@ -67,7 +69,6 @@ void Player::Init()
 {
 	sortingLayer = SortingLayers::Foreground;
 	sortingOrder = 0;
-	//SetOrigin(Origins::MC);
 }
 
 void Player::Release()

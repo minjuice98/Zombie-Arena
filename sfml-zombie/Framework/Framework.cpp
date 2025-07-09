@@ -9,6 +9,14 @@ void Framework::Init(int w, int h, const std::string& t)
 
     fontIds.push_back("fonts/zombiecontrol.ttf");
 
+    soundIds.push_back("sound/hit.wav");
+    soundIds.push_back("sound/pickup.wav");
+    soundIds.push_back("sound/powerup.wav");
+    soundIds.push_back("sound/reload.wav");
+    soundIds.push_back("sound/reload_failed.wav");
+    soundIds.push_back("sound/shoot.wav");
+    soundIds.push_back("sound/splat.wav");
+
 	TEXTURE_MGR.Load(texIds);
 	FONT_MGR.Load(fontIds);
 	SOUNDBUFFER_MGR.Load(soundIds);
@@ -16,6 +24,7 @@ void Framework::Init(int w, int h, const std::string& t)
     Utils::Init();
 	InputMgr::Init();
 	SCENE_MGR.Init();
+    SoundMgr::Init();
 }
 
 void Framework::Do()

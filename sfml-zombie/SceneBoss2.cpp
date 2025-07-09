@@ -42,7 +42,6 @@ void SceneBoss2::Enter()
 	sf::Vector2f windowSize = FRAMEWORK.GetWindowSizeF();
 
 	stageLevel = 1;
-	score = 0;
 	zombieCount = 0;
 
 	worldView.setSize(windowSize);

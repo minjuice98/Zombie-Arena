@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "GameUI.h"
 #include "Player.h"
+#include "SceneGame.h"
 
 GameUI::GameUI(const std::string& name)
 	: GameObject(name)
@@ -39,7 +40,7 @@ void GameUI::Release()
 
 void GameUI::Reset()
 {
-	scoreMessage.setString("SCORE:" + std::to_string(0));
+	scoreMessage.setString("SCORE:" + std::to_string(SceneGame::score));
 	Utils::SetOrigin(scoreMessage, Origins::TL);
 
 	ammoMessage.setString(std::to_string(player->GetCurrentAmmo()) + "/" + std::to_string(player->GetReserveAmmo()));
