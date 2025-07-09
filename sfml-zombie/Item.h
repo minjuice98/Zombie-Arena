@@ -13,8 +13,7 @@ public:
 		Heal,
 		Ammo,
 		Acceleration,
-	};
-	
+	};	
 
 	static const int TotalTypes = 3;
 

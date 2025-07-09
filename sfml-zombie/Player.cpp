@@ -3,6 +3,7 @@
 #include "SceneGame.h"
 #include "Bullet.h"
 #include "GameUI.h"
+#include "TileMap.h"
 
 Player::Player(const std::string& name)
 	: GameObject(name)
@@ -77,6 +78,13 @@ void Player::Reset()
 {
 	sceneGame = (SceneGame*)SCENE_MGR.GetCurrentScene();
 	ui = (GameUI*)sceneGame->FindGameObject("UI");
+	map = (TileMap*)sceneGame->FindGameObject("TileMap");
+
+	sf::FloatRect bounds = map->GetBounds();
+	minX = bounds.left - bounds.width * 0.5f;
+	minY = bounds.top - bounds.height * 0.5f;
+	maxX = minX + bounds.width;
+	maxY = minY + bounds.height;
 
 	for (Bullet* bullet : bulletList)
 	{
@@ -117,11 +125,15 @@ void Player::Update(float dt)
 
 	direction.x = InputMgr::GetAxis(Axis::Horizontal);
 	direction.y = InputMgr::GetAxis(Axis::Vertical);
+
 	if (Utils::Magnitude(direction) > 1.f)
 	{
 		Utils::Normalize(direction);
 	}
-	SetPosition(position + direction * speed * dt);
+	sf::Vector2f pos = position + direction * speed * dt;
+	pos.x = Utils::Clamp(pos.x, minX, maxX);
+	pos.y = Utils::Clamp(pos.y, minY, maxY);
+	SetPosition(pos);
 
 	sf::Vector2i mousePos = InputMgr::GetMousePosition();
 	sf::Vector2f mouseWorldPos = sceneGame->ScreenToWorld(mousePos);

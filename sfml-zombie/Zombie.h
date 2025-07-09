@@ -5,6 +5,7 @@
 
 class Player;
 class Blood;
+
 class Zombie : public GameObject
 {
 public:
@@ -36,10 +37,9 @@ protected:
 	Player* player = nullptr;
 	Blood* blood = nullptr;
 	SceneGame* sceneGame = nullptr;
+	TileMap* map = nullptr;
 
-	HitBox hitBox;
-
-	
+	HitBox hitBox;	
 
 public:
 	Zombie(const std::string& name = "");

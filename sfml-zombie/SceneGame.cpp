@@ -43,8 +43,6 @@ void SceneGame::Init()
 		zombie->SetActive(false);
 		zombiePool.push_back(zombie);
 
-
-
 		Item* item = (Item*)AddGameObject(new Item());
 		item->SetActive(false);
 		itemPool.push_back(item);
@@ -56,6 +54,7 @@ void SceneGame::Init()
 		blood->SetActive(false);
 		bloodPool.push_back(blood);
 	}
+
 	ui = (GameUI*)AddGameObject(new GameUI("UI"));
 	ui->SetPlayer(player);
 	ui->SetStageLevel(stageLevel);
@@ -123,6 +122,10 @@ void SceneGame::Update(float dt)
 			score += 10;
 			ui->UpdateScoreMessage(score);
 			ui->UpdateZombieCountMessage(zombieCount);
+			if (zombieCount == 0)
+			{
+				StageClear();
+			}
 		}
 		else
 		{
@@ -140,39 +143,40 @@ void SceneGame::Update(float dt)
 		}
 		else
 		{
-			++it2;
-			auto It = itemList.begin();
-			while (It != itemList.end())
-			{
-				if (!(*It)->GetActive())
-				{
-					itemPool.push_back(*It);
-					It = itemList.erase(It);
-				}
-				else
-				{
-					++It;
-				}
-			}
-
-			worldView.setCenter(player->GetPosition());
-
-			if (InputMgr::GetKeyDown(sf::Keyboard::Space))// ���ӽ������� ���� 
-			{
-				SpawnZombies(10, 500.f);
-			}
-
-			if (InputMgr::GetMouseButton(sf::Mouse::Button::Right))
-			{
-				std::cout << "aa" << std::endl;
-				Skill();
-			}
-
-			if (InputMgr::GetKeyDown(sf::Keyboard::Return))
-			{
-				SCENE_MGR.ChangeScene(SceneIds::Boss);
-			}
+			++it2;			
 		}
+	}
+
+	auto It = itemList.begin();
+	while (It != itemList.end())
+	{
+		if (!(*It)->GetActive())
+		{
+			itemPool.push_back(*It);
+			It = itemList.erase(It);
+		}
+		else
+		{
+			++It;
+		}
+	}
+
+	worldView.setCenter(player->GetPosition());
+
+	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+	{
+		SpawnZombies(10);
+	}
+
+	if (InputMgr::GetMouseButtonDown(sf::Mouse::Right))
+	{
+		std::cout << "Skill Use" << std::endl;
+		Skill();
+	}
+
+	if (InputMgr::GetKeyDown(sf::Keyboard::Return))
+	{
+		SCENE_MGR.ChangeScene(Id);
 	}
 }
 
@@ -183,13 +187,14 @@ void SceneGame::Draw(sf::RenderWindow& window)
 	window.draw(cursor);
 }
 
-void SceneGame::SpawnZombies(int count, float radius)
+void SceneGame::SpawnZombies(int count)
 {
+	float radius = map->GetBounds().width * 0.5f;
 	for (int i = 0; i < count; ++i)
 	{
 		if (zombiePool.empty())
 		{
-			zombie = (Zombie*)AddGameObject(new Zombie());//���� ���ο� ���� ��� �ּҸ� �����ּҿ�
+			zombie = (Zombie*)AddGameObject(new Zombie());
 			zombie->Init();
 		}
 		else
@@ -207,9 +212,16 @@ void SceneGame::SpawnZombies(int count, float radius)
 	ui->UpdateZombieCountMessage(zombieCount);
 }
 
+void SceneGame::StageClear()
+{
+	SCENE_MGR.ChangeScene((SceneIds)((int)Id + 1));
+}
+
 void SceneGame::SpawnItems(int count)
 {
 	sf::FloatRect bounds = map->GetBounds();
+	bounds.left -= bounds.width * 0.5f;
+	bounds.top -= bounds.height * 0.5f;
 
 	for (int i = 0; i < count; ++i)
 	{
@@ -230,14 +242,9 @@ void SceneGame::SpawnItems(int count)
 		sf::Vector2f pos = Utils::RandomPointInRect(bounds);
 		item->SetPosition(pos);
 		itemList.push_back(item);
-
 	}
-
-
-
-
-
 }
+
 void SceneGame::SpawnBlood(const sf::Vector2f& pos)
 {
 	Blood* blood = nullptr;
@@ -276,6 +283,6 @@ void SceneGame::Skill()
 	}
 	else
 	{
-		std::cout << "MP ���� " << player->GetMp() << std::endl;
+		std::cout << "MP lack" << std::endl;
 	}
 }

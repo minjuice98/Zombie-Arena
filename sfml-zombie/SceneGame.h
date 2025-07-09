@@ -21,6 +21,7 @@ protected:
 
 	std::list<Blood*> bloodList;
 	std::list<Blood*> bloodPool;
+
 	std::list<Item*> itemList;
 	std::list<Item*> itemPool;
 
@@ -31,8 +32,6 @@ protected:
 	int zombieCount = 0;
 
 public:
-	SceneIds Id;
-
 	SceneGame();
 	SceneGame(SceneIds id);
 	~SceneGame() override = default;
@@ -46,7 +45,9 @@ public:
 	void SpawnItems(int count);
 	void SpawnBlood(const sf::Vector2f& pos);
 	void Skill();
-	void SpawnZombies(int count, float radius);
+	void SpawnZombies(int count);
+
+	void StageClear();
 
 	const std::list<Zombie*>& GetZombies() const 
 	{

@@ -2,12 +2,14 @@
 #include "SceneMgr.h"
 #include "SceneGame.h"
 #include "SceneWave1.h"
+#include "SceneWave2.h"
 #include "SceneBoss2.h"
 
 void SceneMgr::Init()
 {
 	scenes.push_back(new SceneGame());
 	scenes.push_back(new SceneWave1());
+	scenes.push_back(new SceneWave2());
 	scenes.push_back(new SceneBoss2());
 
 	for (auto scene : scenes)

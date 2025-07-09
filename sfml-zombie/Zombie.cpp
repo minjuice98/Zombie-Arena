@@ -3,7 +3,6 @@
 #include "Player.h"
 #include "Blood.h"
 
-
 Zombie::Zombie(const std::string& name)
 	: GameObject(name)
 {
@@ -56,9 +55,9 @@ void Zombie::Release()
 
 void Zombie::Reset()
 {
-	sceneGame = dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene()); //�߿�
+	sceneGame = dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene());
 
-	player = (Player*)SCENE_MGR.GetCurrentScene()->FindGameObject("Player");
+	player = (Player*)sceneGame->FindGameObject("Player");
 
 	body.setTexture(TEXTURE_MGR.Get(texId), true);
 	SetOrigin(Origins::MC);
@@ -126,8 +125,6 @@ void Zombie::SetType(Types type)
 		break;
 	}
 }
-
-
 
 void Zombie::OnDamage(int damage)
 {

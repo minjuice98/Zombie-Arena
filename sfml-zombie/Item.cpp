@@ -55,7 +55,7 @@ void Item::Release()
 
 void Item::Reset()
 {
-	player = (Player*)SCENE_MGR.GetCurrentScene()->FindGameObject("Player");//
+	player = (Player*)SCENE_MGR.GetCurrentScene()->FindGameObject("Player");
 	item.setTexture(TEXTURE_MGR.Get(texId), true);
 	SetOrigin(Origins::MC);
 	SetPosition({ 0.f, 0.f });
@@ -77,12 +77,7 @@ void Item::Update(float dt)//히트박스
 			this->ActiveType();
 			SetActive(false);
 		}
-
 	}
-
-
-
-
 }
 
 void Item::Draw(sf::RenderWindow& window)

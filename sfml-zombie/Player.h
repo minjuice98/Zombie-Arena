@@ -5,6 +5,7 @@
 class GameUI;
 class SceneGame;
 class Bullet;
+class TileMap;
 
 class Player : public GameObject
 {
@@ -16,11 +17,11 @@ protected:
 	sf::Vector2f look;
 
 	float speed = 200.f;
-
-	GameUI* ui = nullptr;
 	float MaxSpeed = 550.f;
 
 	SceneGame* sceneGame = nullptr;
+	GameUI* ui = nullptr;
+	TileMap* map = nullptr;
 
 	HitBox hitBox;
 
@@ -39,12 +40,16 @@ protected:
 	int currentAmmo = MAX_MAG;
 	int reserveAmmo = INITIAL_AMMO;
 
+	int minX;
+	int minY;
+	int maxX;
+	int maxY;
+
 public:
 	bool IsAlive() const { return hp > 0; }
 
 	Player(const std::string& name = "");
 	~Player() override = default;
-
 
 	void SetPosition(const sf::Vector2f& pos) override;
 	void SetRotation(float rot) override;
