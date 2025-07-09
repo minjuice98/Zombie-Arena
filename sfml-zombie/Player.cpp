@@ -54,7 +54,7 @@ void Player::Heal(int amount)
 
 void Player::AddResrveAmmo(int ammo)
 {
-	resrveAmmo += ammo;
+	reserveAmmo += ammo;
 }
 
 void Player::AddSpeed(int s)

@@ -53,9 +53,9 @@ public:
 	void SetOrigin(Origins preset) override;
 	int GetHp() const { return hp; };
 	void Heal(int amount);
-	int GetResrveAmmo() const{ return resrveAmmo; };
+	int GetResrveAmmo() const{ return reserveAmmo; };
 	void AddResrveAmmo(int ammo);
-	int GetSpeed() const { return speed; };
+	float GetSpeed() const { return speed; };
 	void AddSpeed(int s);
 	 
 

@@ -43,8 +43,7 @@ public:
 	void Update(float dt) override;
 	void Draw(sf::RenderWindow& window) override;
 
-	void SpawnZombies(int count);
-	void SpawnItems(int count);//���񰡾ƴ� Ÿ������ ? 
+	void SpawnItems(int count);
 	void SpawnBlood(const sf::Vector2f& pos);
 	void Skill();
 	void SpawnZombies(int count, float radius);
@@ -57,13 +56,8 @@ public:
 	{
 		return bloodList;
 	}
-};
-
-
 	const std::list<Item*>& GetItems() const
 	{
 		return itemList;
 	}
-
 };
-

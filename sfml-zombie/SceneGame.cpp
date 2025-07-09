@@ -33,7 +33,7 @@ void SceneGame::Init()
 	texIds.push_back("graphics/ammo_pickup.png");
 	texIds.push_back("graphics/acceleration.png");
 
-	tileMap = (TileMap*)AddGameObject(new TileMap("TileMap"));
+	map = (TileMap*)AddGameObject(new TileMap("TileMap"));
 	player = (Player*)AddGameObject(new Player("Player"));
 	AddGameObject(new Item("Item"));
 
@@ -141,36 +141,38 @@ void SceneGame::Update(float dt)
 		else
 		{
 			++it2;
-	auto It = itemList.begin();
-	while (It != itemList.end())
-	{
-		if (!(*It)->GetActive())
-		{
-			itemPool.push_back(*It);
-			It = itemList.erase(It);
+			auto It = itemList.begin();
+			while (It != itemList.end())
+			{
+				if (!(*It)->GetActive())
+				{
+					itemPool.push_back(*It);
+					It = itemList.erase(It);
+				}
+				else
+				{
+					++It;
+				}
+			}
+
+			worldView.setCenter(player->GetPosition());
+
+			if (InputMgr::GetKeyDown(sf::Keyboard::Space))// ���ӽ������� ���� 
+			{
+				SpawnZombies(10, 500.f);
+			}
+
+			if (InputMgr::GetMouseButton(sf::Mouse::Button::Right))
+			{
+				std::cout << "aa" << std::endl;
+				Skill();
+			}
+
+			if (InputMgr::GetKeyDown(sf::Keyboard::Return))
+			{
+				SCENE_MGR.ChangeScene(SceneIds::Boss);
+			}
 		}
-		else
-		{
-			++It;
-		}
-	}
-
-	worldView.setCenter(player->GetPosition());
-
-	if (InputMgr::GetKeyDown(sf::Keyboard::Space))// ���ӽ������� ���� 
-	{
-		SpawnZombies(10, 500.f);
-	}
-	
-	if (InputMgr::GetMouseButton(sf::Mouse::Button::Right))
-	{
-		std::cout << "aa" << std::endl;
-		Skill();
-	}
-
-	if (InputMgr::GetKeyDown(sf::Keyboard::Return))
-	{
-		SCENE_MGR.ChangeScene(SceneIds::Boss);
 	}
 }
 
@@ -207,7 +209,7 @@ void SceneGame::SpawnZombies(int count, float radius)
 
 void SceneGame::SpawnItems(int count)
 {
-	sf::FloatRect bounds = tileMap->GetBounds();
+	sf::FloatRect bounds = map->GetBounds();
 
 	for (int i = 0; i < count; ++i)
 	{
@@ -228,7 +230,7 @@ void SceneGame::SpawnItems(int count)
 		sf::Vector2f pos = Utils::RandomPointInRect(bounds);
 		item->SetPosition(pos);
 		itemList.push_back(item);
-	
+
 	}
 
 
@@ -272,7 +274,7 @@ void SceneGame::Skill()
 		}
 		std::cout << "After MP " << player->GetMp() << std::endl;
 	}
-	else 
+	else
 	{
 		std::cout << "MP ���� " << player->GetMp() << std::endl;
 	}
