@@ -8,8 +8,8 @@ TileMap::TileMap(const std::string& name)
 
 void TileMap::Set(const sf::Vector2i& count, const sf::Vector2f& size)
 {
-	cellCount = count;
-	cellSize = size;
+	cellCount = count; //Ÿ�ϰ���
+	cellSize = size; //Ÿ�� ũ��
 
 	va.clear();
 	va.setPrimitiveType(sf::Quads);
@@ -93,7 +93,7 @@ void TileMap::SetOrigin(Origins preset)
 	GameObject::SetOrigin(preset);
 	if (preset != Origins::Custom)
 	{
-		sf::FloatRect rect;
+		sf::FloatRect rect; //Ÿ�ϸ��� ũ�⸦ ���ϱ����� �Լ�
 		rect.width = cellCount.x * cellSize.x;
 		rect.height = cellCount.y * cellSize.y;
 
@@ -101,6 +101,15 @@ void TileMap::SetOrigin(Origins preset)
 		origin.y = rect.height * ((int)preset / 3) * 0.5f;
 	}
 	UpdateTransform();
+}
+
+sf::FloatRect TileMap::GetBounds() const
+{
+	return sf::FloatRect(
+		position.x,
+		position.y,
+		cellCount.x * cellSize.x,
+		cellCount.y * cellSize.y);
 }
 
 void TileMap::Init()

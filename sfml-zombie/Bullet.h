@@ -18,6 +18,8 @@ protected:
 
 	SceneGame* sceneGame = nullptr;
 
+
+
 public:
 	Bullet(const std::string& name = "");
 	virtual ~Bullet() = default;

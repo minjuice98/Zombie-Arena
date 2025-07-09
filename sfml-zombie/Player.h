@@ -18,6 +18,8 @@ protected:
 	float speed = 200.f;
 
 	GameUI* ui = nullptr;
+	float MaxSpeed = 550.f;
+
 	SceneGame* sceneGame = nullptr;
 
 	HitBox hitBox;
@@ -43,11 +45,19 @@ public:
 	Player(const std::string& name = "");
 	~Player() override = default;
 
+
 	void SetPosition(const sf::Vector2f& pos) override;
 	void SetRotation(float rot) override;
 	void SetScale(const sf::Vector2f& s) override;
 	void SetOrigin(const sf::Vector2f& o) override;
 	void SetOrigin(Origins preset) override;
+	int GetHp() const { return hp; };
+	void Heal(int amount);
+	int GetResrveAmmo() const{ return resrveAmmo; };
+	void AddResrveAmmo(int ammo);
+	int GetSpeed() const { return speed; };
+	void AddSpeed(int s);
+	 
 
 	int GetCurrentAmmo() const { return currentAmmo; }
 	int GetReserveAmmo() const { return reserveAmmo; }

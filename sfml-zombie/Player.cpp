@@ -43,6 +43,25 @@ void Player::SetOrigin(Origins preset)
 	}
 }
 
+void Player::Heal(int amount)
+{
+	hp += amount;
+	if (hp > maxHp)
+	{
+		hp = maxHp;
+	}
+}
+
+void Player::AddResrveAmmo(int ammo)
+{
+	resrveAmmo += ammo;
+}
+
+void Player::AddSpeed(int s)
+{
+	speed += s;
+}
+
 void Player::Init()
 {
 	sortingLayer = SortingLayers::Foreground;

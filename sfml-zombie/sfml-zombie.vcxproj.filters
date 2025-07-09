@@ -72,6 +72,7 @@
     <ClCompile Include="Variables.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Item.cpp">
     <ClCompile Include="GameUI.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -147,6 +148,7 @@
     <ClInclude Include="Variables.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Item.h">
     <ClInclude Include="Blood.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>

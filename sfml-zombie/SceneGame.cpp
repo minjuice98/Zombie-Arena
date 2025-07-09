@@ -5,8 +5,9 @@
 #include "Zombie.h"
 #include "Blood.h"
 #include "GameUI.h"
+#include "Item.h"
 
-SceneGame::SceneGame() 
+SceneGame::SceneGame()
 	: Scene(SceneIds::Game)
 {
 }
@@ -28,15 +29,25 @@ void SceneGame::Init()
 	texIds.push_back("graphics/crosshair.png");
 	texIds.push_back("graphics/bullet.png");
 	texIds.push_back("graphics/blood.png");
+	texIds.push_back("graphics/health_pickup.png");
+	texIds.push_back("graphics/ammo_pickup.png");
+	texIds.push_back("graphics/acceleration.png");
 
-	AddGameObject(new TileMap("TileMap"));
+	tileMap = (TileMap*)AddGameObject(new TileMap("TileMap"));
 	player = (Player*)AddGameObject(new Player("Player"));
+	AddGameObject(new Item("Item"));
 
 	for (int i = 0; i < 100; ++i)
 	{
 		Zombie* zombie = (Zombie*)AddGameObject(new Zombie());
 		zombie->SetActive(false);
 		zombiePool.push_back(zombie);
+
+
+
+		Item* item = (Item*)AddGameObject(new Item());
+		item->SetActive(false);
+		itemPool.push_back(item);
 	}
 
 	for (int i = 0; i < 50; ++i)
@@ -63,7 +74,7 @@ void SceneGame::Enter()
 	sf::Vector2f windowSize = FRAMEWORK.GetWindowSizeF();
 
 	worldView.setSize(windowSize);
-	worldView.setCenter({0.f, 0.f});
+	worldView.setCenter({ 0.f, 0.f });
 
 	uiView.setSize(windowSize);
 	uiView.setCenter(windowSize * 0.5f);
@@ -130,12 +141,23 @@ void SceneGame::Update(float dt)
 		else
 		{
 			++it2;
+	auto It = itemList.begin();
+	while (It != itemList.end())
+	{
+		if (!(*It)->GetActive())
+		{
+			itemPool.push_back(*It);
+			It = itemList.erase(It);
+		}
+		else
+		{
+			++It;
 		}
 	}
 
 	worldView.setCenter(player->GetPosition());
 
-	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+	if (InputMgr::GetKeyDown(sf::Keyboard::Space))// ���ӽ������� ���� 
 	{
 		SpawnZombies(10, 500.f);
 	}
@@ -165,7 +187,7 @@ void SceneGame::SpawnZombies(int count, float radius)
 	{
 		if (zombiePool.empty())
 		{
-			zombie = (Zombie*)AddGameObject(new Zombie());
+			zombie = (Zombie*)AddGameObject(new Zombie());//���� ���ο� ���� ��� �ּҸ� �����ּҿ�
 			zombie->Init();
 		}
 		else
@@ -183,6 +205,37 @@ void SceneGame::SpawnZombies(int count, float radius)
 	ui->UpdateZombieCountMessage(zombieCount);
 }
 
+void SceneGame::SpawnItems(int count)
+{
+	sf::FloatRect bounds = tileMap->GetBounds();
+
+	for (int i = 0; i < count; ++i)
+	{
+		Item* item = nullptr;
+		if (itemPool.empty())
+		{
+			item = (Item*)AddGameObject(new Item());
+			item->Init();
+		}
+		else
+		{
+			item = itemPool.front();
+			itemPool.pop_front();
+			item->SetActive(true);
+		}
+		item->SetType((Item::Types)Utils::RandomRange(0, Item::TotalTypes));
+		item->Reset();
+		sf::Vector2f pos = Utils::RandomPointInRect(bounds);
+		item->SetPosition(pos);
+		itemList.push_back(item);
+	
+	}
+
+
+
+
+
+}
 void SceneGame::SpawnBlood(const sf::Vector2f& pos)
 {
 	Blood* blood = nullptr;

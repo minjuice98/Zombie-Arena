@@ -5,6 +5,7 @@ class Player;
 class Zombie;
 class Blood;
 class GameUI;
+class Item;
 class TileMap;
 
 class SceneGame : public Scene
@@ -20,6 +21,8 @@ protected:
 
 	std::list<Blood*> bloodList;
 	std::list<Blood*> bloodPool;
+	std::list<Item*> itemList;
+	std::list<Item*> itemPool;
 
 	sf::Sprite cursor;
 
@@ -41,6 +44,7 @@ public:
 	void Draw(sf::RenderWindow& window) override;
 
 	void SpawnZombies(int count);
+	void SpawnItems(int count);//���񰡾ƴ� Ÿ������ ? 
 	void SpawnBlood(const sf::Vector2f& pos);
 	void Skill();
 	void SpawnZombies(int count, float radius);
@@ -54,3 +58,12 @@ public:
 		return bloodList;
 	}
 };
+
+
+	const std::list<Item*>& GetItems() const
+	{
+		return itemList;
+	}
+
+};
+

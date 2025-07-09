@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Blood.h"
 
+
 Zombie::Zombie(const std::string& name)
 	: GameObject(name)
 {
@@ -43,7 +44,7 @@ void Zombie::SetOrigin(Origins preset)
 
 void Zombie::Init()
 {
-	sortingLayer = SortingLayers::Foreground;
+	sortingLayer = SortingLayers::Foreground;//백그라운드 위에 그리겟다.
 	sortingOrder = 0;
 
 	SetType(type);
@@ -125,6 +126,8 @@ void Zombie::SetType(Types type)
 		break;
 	}
 }
+
+
 
 void Zombie::OnDamage(int damage)
 {

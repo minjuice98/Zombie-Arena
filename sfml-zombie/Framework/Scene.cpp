@@ -117,7 +117,7 @@ void Scene::ApplyPendingChanges()
 
 GameObject* Scene::AddGameObject(GameObject* go)
 {
-	objectsToAdd.push_back(go);
+	objectsToAdd.push_back(go); //추가하기전 임시거처 출발준비
 	return go;
 }
 
