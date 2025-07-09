@@ -1,21 +1,16 @@
 #include "stdafx.h"
-#include "SceneGame.h"
+#include "SceneWave1.h"
 #include "Player.h"
 #include "TileMap.h"
 #include "Zombie.h"
 #include "GameUI.h"
 
-SceneGame::SceneGame() 
-	: Scene(SceneIds::Game)
+SceneWave1::SceneWave1()
+	: SceneGame(SceneIds::Wave1)
 {
 }
 
-SceneGame::SceneGame(SceneIds id)
-	: Scene(id)
-{
-}
-
-void SceneGame::Init()
+void SceneWave1::Init()
 {
 	uiView.setSize(1280.f, 720.f);
 
@@ -27,7 +22,9 @@ void SceneGame::Init()
 	texIds.push_back("graphics/crosshair.png");
 	texIds.push_back("graphics/bullet.png");
 
-	AddGameObject(new TileMap("TileMap"));
+	map = (TileMap*)AddGameObject(new TileMap("TileMap"));
+	map->SetSize({ 10,10 });
+
 	player = (Player*)AddGameObject(new Player("Player"));
 
 	for (int i = 0; i < 100; ++i)
@@ -44,7 +41,7 @@ void SceneGame::Init()
 	Scene::Init();
 }
 
-void SceneGame::Enter()
+void SceneWave1::Enter()
 {
 	FRAMEWORK.GetWindow().setMouseCursorVisible(false);
 
@@ -55,7 +52,7 @@ void SceneGame::Enter()
 	sf::Vector2f windowSize = FRAMEWORK.GetWindowSizeF();
 
 	worldView.setSize(windowSize);
-	worldView.setCenter({0.f, 0.f});
+	worldView.setCenter({ 0.f, 0.f });
 
 	uiView.setSize(windowSize);
 	uiView.setCenter(windowSize * 0.5f);
@@ -64,9 +61,11 @@ void SceneGame::Enter()
 
 	cursor.setTexture(TEXTURE_MGR.Get("graphics/crosshair.png"));
 	Utils::SetOrigin(cursor, Origins::MC);
+
+	SpawnZombies(5, 250.f);
 }
 
-void SceneGame::Exit()
+void SceneWave1::Exit()
 {
 	FRAMEWORK.GetWindow().setMouseCursorVisible(true);
 
@@ -80,7 +79,7 @@ void SceneGame::Exit()
 	Scene::Exit();
 }
 
-void SceneGame::Update(float dt)
+void SceneWave1::Update(float dt)
 {
 	cursor.setPosition(ScreenToUi(InputMgr::GetMousePosition()));
 
@@ -106,46 +105,16 @@ void SceneGame::Update(float dt)
 
 	worldView.setCenter(player->GetPosition());
 
-	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
-	{
-		SpawnZombies(10, 500.f);
-	}
-
 	if (InputMgr::GetKeyDown(sf::Keyboard::Return))
 	{
-		SCENE_MGR.ChangeScene(SceneIds::Game);
+		SCENE_MGR.ChangeScene(SceneIds::Wave1);
 	}
 }
 
-void SceneGame::Draw(sf::RenderWindow& window)
+void SceneWave1::Draw(sf::RenderWindow& window)
 {
 	Scene::Draw(window);
 
 	window.setView(uiView);
 	window.draw(cursor);
-}
-
-void SceneGame::SpawnZombies(int count, float radius)
-{
-	for (int i = 0; i < count; ++i)
-	{
-		Zombie* zombie = nullptr;
-		if (zombiePool.empty())
-		{
-			zombie = (Zombie*)AddGameObject(new Zombie());
-			zombie->Init();
-		}
-		else
-		{
-			zombie = zombiePool.front();
-			zombiePool.pop_front();
-			zombie->SetActive(true);
-		}
-		zombie->SetType((Zombie::Types)Utils::RandomRange(0, Zombie::TotalTypes));
-		zombie->Reset();
-		zombie->SetPosition(Utils::RandomInUnitCircle() * radius);
-		zombieList.push_back(zombie);
-		zombieCount++;
-	}
-	ui->UpdateZombieCountMessage(zombieCount);
 }

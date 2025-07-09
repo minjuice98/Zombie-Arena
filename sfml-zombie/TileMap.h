@@ -8,7 +8,7 @@ protected:
 	sf::Texture* texture = nullptr;
 	sf::Transform transform;
 
-	sf::Vector2i cellCount;
+	sf::Vector2i cellCount = { 5,5 };
 	sf::Vector2f cellSize;
 
 public:
@@ -29,5 +29,7 @@ public:
 	void Reset() override;
 	void Update(float dt) override;
 	void Draw(sf::RenderWindow& window) override;
+
+	void SetSize(sf::Vector2i count) { cellCount = count; }
 };
 

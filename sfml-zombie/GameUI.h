@@ -18,7 +18,7 @@ protected:
 	std::string fontId = "fonts/zombiecontrol.ttf";
 
 	int stageLevel = 1;
-	const float BAR_SIZE = 300.f;
+	const float BAR_SIZE = 250.f;
 
 	Player* player = nullptr;
 

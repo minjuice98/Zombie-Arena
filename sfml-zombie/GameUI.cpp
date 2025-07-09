@@ -29,7 +29,7 @@ void GameUI::Init()
 
 	hpBar.setFillColor(sf::Color::Red);
 	hpBar.setSize({ BAR_SIZE,50.f});
-	hpBar.setPosition({ 300.f,windowSize.y - 45.f });
+	hpBar.setPosition({ 300.f,windowSize.y - 40.f });
 	Utils::SetOrigin(hpBar, Origins::ML);
 }
 

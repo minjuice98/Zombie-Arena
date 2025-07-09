@@ -56,14 +56,7 @@ void Player::Release()
 
 void Player::Reset()
 {
-	if (SCENE_MGR.GetCurrentSceneId() == SceneIds::Game)
-	{
-		sceneGame = (SceneGame*)SCENE_MGR.GetCurrentScene();
-	}
-	else
-	{
-		sceneGame = nullptr;
-	}
+	sceneGame = (SceneGame*)SCENE_MGR.GetCurrentScene();
 	ui = (GameUI*)sceneGame->FindGameObject("UI");
 
 	for (Bullet* bullet : bulletList)
@@ -165,7 +158,7 @@ void Player::Shoot()
 	}
 
 	bullet->Reset();
-	bullet->Fire(position + look * 10.f, look, 1000.f, 10);
+	bullet->Fire(position + look * 10.f, look, 1000.f, 100);
 
 	bulletList.push_back(bullet);
 	sceneGame->AddGameObject(bullet);
@@ -184,6 +177,6 @@ void Player::OnDamage(int damage)
 	ui->UpdateHpBar(maxHp, hp);
 	if (hp == 0)
 	{
-		SCENE_MGR.ChangeScene(SceneIds::Game);
+		SCENE_MGR.ChangeScene(sceneGame->Id);
 	}
 }

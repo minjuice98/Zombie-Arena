@@ -108,7 +108,7 @@ void TileMap::Init()
 	sortingLayer = SortingLayers::Background;
 	sortingOrder = 0;
 
-	Set({ 50, 50 }, {50.f, 50.f});
+	Set(cellCount, {50.f, 50.f});
 }
 
 void TileMap::Release()

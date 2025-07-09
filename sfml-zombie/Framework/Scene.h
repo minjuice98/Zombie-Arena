@@ -39,7 +39,6 @@ public:
 	std::vector<GameObject*> FindGameObjects(const std::string& name);
 	void FindGameObjects(const std::string& name, std::vector<GameObject*>& results);
 
-
 	sf::Vector2f ScreenToWorld(sf::Vector2i screenPos);
 	sf::Vector2i WorldToScreen(sf::Vector2f worldPos);
 	sf::Vector2f ScreenToUi(sf::Vector2i screePos);

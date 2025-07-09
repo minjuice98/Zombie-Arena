@@ -15,7 +15,7 @@ protected:
 	sf::Vector2f direction;
 	sf::Vector2f look;
 
-	float speed = 500.f;
+	float speed = 200.f;
 
 	GameUI* ui = nullptr;
 	SceneGame* sceneGame = nullptr;
@@ -25,14 +25,14 @@ protected:
 	std::list<Bullet*> bulletList;
 	std::list<Bullet*> bulletPool;
 
-	float shootInterval = 0.3f;
+	float shootInterval = 0.33f;
 	float shootTimer = 0.f;
 
 	int hp = 0;
-	int maxHp = 500;
+	int maxHp = 100;
 
-	const int MAX_MAG = 10;
-	const int INITIAL_AMMO = 60;
+	const int MAX_MAG = 12;
+	const int INITIAL_AMMO = 24;
 	int currentAmmo = MAX_MAG;
 	int reserveAmmo = INITIAL_AMMO;
 

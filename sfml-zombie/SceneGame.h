@@ -4,12 +4,14 @@
 class Player;
 class Zombie;
 class GameUI;
+class TileMap;
 
 class SceneGame : public Scene
 {
 protected:
 	Player* player = nullptr;
 	GameUI* ui = nullptr;
+	TileMap* map = nullptr;
 
 	std::list<Zombie*> zombieList;
 	std::list<Zombie*> zombiePool;
@@ -22,6 +24,7 @@ protected:
 
 public:
 	SceneGame();
+	SceneGame(SceneIds id);
 	~SceneGame() override = default;
 
 	void Init() override;
@@ -30,7 +33,7 @@ public:
 	void Update(float dt) override;
 	void Draw(sf::RenderWindow& window) override;
 
-	void SpawnZombies(int count);
+	void SpawnZombies(int count, float radius);
 
 	const std::list<Zombie*>& GetZombies() const 
 	{

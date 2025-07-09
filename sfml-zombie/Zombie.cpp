@@ -98,23 +98,23 @@ void Zombie::SetType(Types type)
 	{
 	case Types::Bloater:
 		texId = "graphics/bloater.png";
-		maxHp = 200;
-		speed = 50;
-		damage = 100.f;
+		maxHp = 500;
+		speed = 50.f;
+		damage = 40.f;
 		attackInterval = 1.f;
 		break;
 	case Types::Chaser:
 		texId = "graphics/chaser.png";
-		maxHp = 100;
+		maxHp = 250;
 		speed = 100.f;
-		damage = 100.f;
+		damage = 30.f;
 		attackInterval = 1.f;
 		break;
 	case Types::Crawler:
 		texId = "graphics/crawler.png";
-		maxHp = 50;
-		speed = 200;
-		damage = 100.f;
+		maxHp = 150;
+		speed = 75.f;
+		damage = 20.f;
 		attackInterval = 1.f;
 		break;
 	}
