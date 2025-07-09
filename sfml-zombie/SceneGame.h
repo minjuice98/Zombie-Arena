@@ -20,7 +20,10 @@ protected:
 	sf::Sprite cursor;
 
 public:
+	SceneIds Id;
+
 	SceneGame();
+	SceneGame(SceneIds id);
 	~SceneGame() override = default;
 
 	void Init() override;

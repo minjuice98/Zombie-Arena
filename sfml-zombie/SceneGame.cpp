@@ -10,6 +10,11 @@ SceneGame::SceneGame()
 {
 }
 
+SceneGame::SceneGame(SceneIds id)
+	: Scene(id)
+{
+}
+
 void SceneGame::Init()
 {
 	texIds.push_back("graphics/player.png");
@@ -128,7 +133,7 @@ void SceneGame::Update(float dt)
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::Return))
 	{
-		SCENE_MGR.ChangeScene(SceneIds::Game);
+		SCENE_MGR.ChangeScene(SceneIds::Boss);
 	}
 }
 

@@ -55,14 +55,8 @@ void Player::Release()
 
 void Player::Reset()
 {
-	if (SCENE_MGR.GetCurrentSceneId() == SceneIds::Game)
-	{
-		sceneGame = (SceneGame*)SCENE_MGR.GetCurrentScene();
-	}
-	else
-	{
-		sceneGame = nullptr;
-	}
+
+	sceneGame = (SceneGame*)SCENE_MGR.GetCurrentScene();
 
 	for (Bullet* bullet : bulletList)
 	{
@@ -112,7 +106,6 @@ void Player::Update(float dt)
 	sf::Vector2f mouseWorldPos = sceneGame->ScreenToWorld(mousePos);
 	look = Utils::GetNormal(mouseWorldPos - GetPosition());
 	SetRotation(Utils::Angle(look));
-
 	hitBox.UpdateTransform(body, GetLocalBounds());
 
 	shootTimer += dt;
