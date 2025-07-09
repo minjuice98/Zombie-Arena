@@ -147,6 +147,7 @@ void Player::Update(float dt)
 	{
 		shootTimer = 0.f;
 		Shoot();
+		SoundMgr::shoot.play();
 	}
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::R) && reserveAmmo > 0 && currentAmmo < MAX_MAG)
@@ -164,6 +165,7 @@ void Player::Update(float dt)
 		}
 
 		ui->UpdateAmmoMessage();
+		SoundMgr::reload.play();
 	}
 }
 
@@ -206,6 +208,7 @@ void Player::OnDamage(int damage)
 
 	hp = Utils::Clamp(hp - damage, 0, maxHp);
 	ui->UpdateHpBar(maxHp, hp);
+	SoundMgr::hit.play();
 	if (hp == 0)
 	{
 		SCENE_MGR.ChangeScene(sceneGame->Id);

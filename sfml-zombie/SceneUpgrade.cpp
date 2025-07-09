@@ -70,6 +70,7 @@ void SceneUpgrade::Update(float dt)
 		{
 			hpUpgradeCount++;
 			SCENE_MGR.ChangeScene(nextSceneId);
+			SoundMgr::powerUp.play();
 		}
 	}
 	else
@@ -84,6 +85,7 @@ void SceneUpgrade::Update(float dt)
 		{
 			speedUpgradeCount++;
 			SCENE_MGR.ChangeScene(nextSceneId);
+			SoundMgr::powerUp.play();
 		}
 	}
 	else
@@ -98,6 +100,7 @@ void SceneUpgrade::Update(float dt)
 		{
 			pickupUpgradeCount++;
 			SCENE_MGR.ChangeScene(nextSceneId);
+			SoundMgr::powerUp.play();
 		}
 	}
 	else

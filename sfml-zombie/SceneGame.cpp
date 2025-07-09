@@ -310,6 +310,7 @@ void SceneGame::Skill()
 			if (zombie->GetActive())
 			{
 				zombie->OnDamage(100);
+				SoundMgr::splat.play();
 			}
 		}
 	}

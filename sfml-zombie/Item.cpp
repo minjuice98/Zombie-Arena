@@ -71,6 +71,7 @@ void Item::Update(float dt)//��Ʈ�ڽ�
 	if (Utils::CheckCollision(hitBox.rect, player->GetHitBox().rect))
 	{
 		ActiveType();
+		SoundMgr::pickUp.play();
 		SetActive(false);
 	}
 	else if (Duration <= 0.f)
