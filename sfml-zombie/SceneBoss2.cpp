@@ -2,6 +2,7 @@
 #include "SceneBoss2.h"
 #include "TileMap.h"
 #include "Player.h"
+#include "GameUI.h"
 
 SceneBoss2::SceneBoss2() : SceneGame(SceneIds::Boss)
 {
@@ -22,8 +23,15 @@ void SceneBoss2::Init()
 	texIds.push_back("graphics/crosshair.png");
 	texIds.push_back("graphics/Boss.png");
 
+	map = (TileMap*)AddGameObject(new TileMap("TileMap"));
+	map->SetSize({ 30,30 });
+
 	AddGameObject(new TileMap("TileMap"));
 	player = (Player*)AddGameObject(new Player("Player"));
+
+	ui = (GameUI*)AddGameObject(new GameUI("UI"));
+	ui->SetPlayer(player);
+	ui->SetStageLevel(stageLevel);
 
 	Scene::Init();
 }
@@ -32,6 +40,10 @@ void SceneBoss2::Enter()
 {
 	FRAMEWORK.GetWindow().setMouseCursorVisible(false);
 	sf::Vector2f windowSize = FRAMEWORK.GetWindowSizeF();
+
+	stageLevel = 1;
+	score = 0;
+	zombieCount = 0;
 
 	worldView.setSize(windowSize);
 	worldView.setCenter({ 0.f, 0.f });
@@ -68,7 +80,7 @@ void SceneBoss2::Update(float dt)
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::Return))
 	{
-		SCENE_MGR.ChangeScene(SceneIds::Game);
+		SCENE_MGR.ChangeScene(SceneIds::Boss);
 	}
 }
 

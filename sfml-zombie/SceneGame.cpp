@@ -142,7 +142,7 @@ void SceneGame::Update(float dt)
 	
 	if (InputMgr::GetMouseButton(sf::Mouse::Button::Right))
 	{
-		std::cout << "��Ŭ��" << std::endl;
+		std::cout << "aa" << std::endl;
 		Skill();
 	}
 
