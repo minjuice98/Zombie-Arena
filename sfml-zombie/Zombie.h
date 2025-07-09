@@ -23,7 +23,8 @@ protected:
 	sf::Sprite body;
 	std::string texId;
 	sf::Vector2f direction;
-
+	
+	std::string name;
 	int maxHp = 0;
 	float speed = 0.f;
 	int damage = 0;
@@ -38,8 +39,6 @@ protected:
 	SceneGame* sceneGame = nullptr;
 
 	HitBox hitBox;
-
-	
 
 public:
 	Zombie(const std::string& name = "");
@@ -59,6 +58,7 @@ public:
 	void Draw(sf::RenderWindow& window) override;
 
 	void SetType(Types type);
+	void BossType();
 
 	sf::FloatRect GetLocalBounds() const override
 	{

@@ -56,7 +56,7 @@ void Zombie::Release()
 
 void Zombie::Reset()
 {
-	sceneGame = dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene()); //�߿�
+	sceneGame = dynamic_cast<SceneGame*>(SCENE_MGR.GetCurrentScene()); 
 
 	player = (Player*)SCENE_MGR.GetCurrentScene()->FindGameObject("Player");
 
@@ -127,7 +127,16 @@ void Zombie::SetType(Types type)
 	}
 }
 
-
+void Zombie::BossType()
+{
+	name = "Boss";
+	texId = "graphics/Boss.png";
+	maxHp = 1000;
+	speed = 75.f;
+	damage = 50.f;
+	attackInterval = 1.f;
+	//mpUp = 3;
+}
 
 void Zombie::OnDamage(int damage)
 {

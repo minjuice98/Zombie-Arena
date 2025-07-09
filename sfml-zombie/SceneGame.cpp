@@ -43,8 +43,6 @@ void SceneGame::Init()
 		zombie->SetActive(false);
 		zombiePool.push_back(zombie);
 
-
-
 		Item* item = (Item*)AddGameObject(new Item());
 		item->SetActive(false);
 		itemPool.push_back(item);
@@ -56,6 +54,7 @@ void SceneGame::Init()
 		blood->SetActive(false);
 		bloodPool.push_back(blood);
 	}
+
 	ui = (GameUI*)AddGameObject(new GameUI("UI"));
 	ui->SetPlayer(player);
 	ui->SetStageLevel(stageLevel);
@@ -141,39 +140,41 @@ void SceneGame::Update(float dt)
 		else
 		{
 			++it2;
-			auto It = itemList.begin();
-			while (It != itemList.end())
-			{
-				if (!(*It)->GetActive())
-				{
-					itemPool.push_back(*It);
-					It = itemList.erase(It);
-				}
-				else
-				{
-					++It;
-				}
-			}
-
-			worldView.setCenter(player->GetPosition());
-
-			if (InputMgr::GetKeyDown(sf::Keyboard::Space))// ���ӽ������� ���� 
-			{
-				SpawnZombies(10, 500.f);
-			}
-
-			if (InputMgr::GetMouseButton(sf::Mouse::Button::Right))
-			{
-				std::cout << "aa" << std::endl;
-				Skill();
-			}
-
-			if (InputMgr::GetKeyDown(sf::Keyboard::Return))
-			{
-				SCENE_MGR.ChangeScene(SceneIds::Boss);
-			}
 		}
 	}
+
+	auto It = itemList.begin();
+	while (It != itemList.end())
+	{
+		if (!(*It)->GetActive())
+		{
+			itemPool.push_back(*It);
+			It = itemList.erase(It);
+		}
+		else
+		{
+			++It;
+		}
+	}
+
+	worldView.setCenter(player->GetPosition());
+
+	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+	{
+		SpawnZombies(10, 500.f);
+	}
+
+	if (InputMgr::GetMouseButton(sf::Mouse::Button::Right))
+	{
+		std::cout << "right" << std::endl;
+		Skill();
+	}
+
+	if (InputMgr::GetKeyDown(sf::Keyboard::Return))
+	{
+		SCENE_MGR.ChangeScene(SceneIds::Boss);
+	}
+
 }
 
 void SceneGame::Draw(sf::RenderWindow& window)
@@ -189,7 +190,7 @@ void SceneGame::SpawnZombies(int count, float radius)
 	{
 		if (zombiePool.empty())
 		{
-			zombie = (Zombie*)AddGameObject(new Zombie());//���� ���ο� ���� ��� �ּҸ� �����ּҿ�
+			zombie = (Zombie*)AddGameObject(new Zombie());
 			zombie->Init();
 		}
 		else
@@ -232,11 +233,6 @@ void SceneGame::SpawnItems(int count)
 		itemList.push_back(item);
 
 	}
-
-
-
-
-
 }
 void SceneGame::SpawnBlood(const sf::Vector2f& pos)
 {
@@ -276,6 +272,6 @@ void SceneGame::Skill()
 	}
 	else
 	{
-		std::cout << "MP ���� " << player->GetMp() << std::endl;
+		std::cout << "MP 부족 " << player->GetMp() << std::endl;
 	}
 }

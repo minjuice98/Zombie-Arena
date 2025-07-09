@@ -31,8 +31,6 @@ protected:
 	int zombieCount = 0;
 
 public:
-	SceneIds Id;
-
 	SceneGame();
 	SceneGame(SceneIds id);
 	~SceneGame() override = default;
