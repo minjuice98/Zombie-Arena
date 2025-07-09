@@ -11,6 +11,7 @@ void SceneMgr::Init()
 	scenes.push_back(new SceneWave1());
 	scenes.push_back(new SceneWave2());
 	scenes.push_back(new SceneBoss2());
+	scenes.push_back(new SceneUpgrade());
 
 	for (auto scene : scenes)
 	{

@@ -9,10 +9,9 @@ protected:
 
 	std::vector<Scene*> scenes;
 
-	SceneIds startScene = SceneIds::Wave1;
+	SceneIds startScene = SceneIds::Upgrade;
 	SceneIds currentScene = SceneIds::None;
-	SceneIds nextScene = SceneIds::None;
-	
+	SceneIds nextScene = SceneIds::None;	
 
 public:
 	void Init();

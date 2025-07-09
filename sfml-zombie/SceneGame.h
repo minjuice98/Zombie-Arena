@@ -30,9 +30,8 @@ protected:
 	int stageLevel = 1;
 	int zombieCount = 0;
 
-	float GenerationInterval = 8.f;	
+	float GenerationInterval = 3.f;	
 	float GenerationTime = 0.f;
-
 
 public:
 	static int score;
@@ -65,4 +64,6 @@ public:
 	{
 		return itemList;
 	}
+
+	void ApplyUpgrade();
 };

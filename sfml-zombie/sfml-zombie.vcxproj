@@ -157,6 +157,7 @@
     <ClCompile Include="SceneDev2.cpp" />
     <ClCompile Include="Framework\SceneMgr.cpp" />
     <ClCompile Include="SceneGame.cpp" />
+    <ClCompile Include="SceneUpgrade.cpp" />
     <ClCompile Include="SceneWave1.cpp" />
     <ClCompile Include="SceneWave2.cpp" />
     <ClCompile Include="SoundMgr.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="SceneDev2.h" />
     <ClInclude Include="Framework\SceneMgr.h" />
     <ClInclude Include="SceneGame.h" />
+    <ClInclude Include="SceneUpgrade.h" />
     <ClInclude Include="SceneWave1.h" />
     <ClInclude Include="SceneWave2.h" />
     <ClInclude Include="SoundMgr.h" />

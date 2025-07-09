@@ -25,6 +25,7 @@ enum class SceneIds
 	Wave1,
 	Wave2,
 	Boss,
+	Upgrade,
 	Dev1,
 	Dev2,
 	Count,

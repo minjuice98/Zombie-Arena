@@ -63,6 +63,7 @@ public:
 	float GetSpeed() const { return speed; };
 	void AddSpeed(int s);
 	 
+	void MaxHpUp(int plus) { maxHp += plus; }
 
 	int GetCurrentAmmo() const { return currentAmmo; }
 	int GetReserveAmmo() const { return reserveAmmo; }

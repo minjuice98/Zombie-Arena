@@ -79,6 +79,7 @@ void SceneGame::Enter()
 	uiView.setSize(windowSize);
 	uiView.setCenter(windowSize * 0.5f);
 
+	ApplyUpgrade();
 	Scene::Enter();
 
 	cursor.setTexture(TEXTURE_MGR.Get("graphics/crosshair.png"));
@@ -170,7 +171,6 @@ void SceneGame::Update(float dt)
 		}
 	}
 
-
 	worldView.setCenter(player->GetPosition());
 
 	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
@@ -225,7 +225,26 @@ void SceneGame::SpawnZombies(int count)
 
 void SceneGame::StageClear()
 {
-	SCENE_MGR.ChangeScene((SceneIds)((int)Id + 1));
+	SceneUpgrade::nextSceneId = (SceneIds)((int)Id + 1);
+	SCENE_MGR.ChangeScene(SceneIds::Upgrade);
+}
+
+void SceneGame::ApplyUpgrade()
+{
+	for (int i = 0; i < SceneUpgrade::hpUpgradeCount; ++i)
+	{
+		player->MaxHpUp(50);
+	}
+
+	for (int i = 0; i < SceneUpgrade::speedUpgradeCount; ++i)
+	{
+		player->AddSpeed(50.f);
+	}
+
+	for (int i = 0; i < SceneUpgrade::pickupUpgradeCount; ++i)
+	{
+		GenerationInterval -= 0.6f;
+	}
 }
 
 void SceneGame::SpawnItems(int count)
