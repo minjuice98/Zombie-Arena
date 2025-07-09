@@ -118,8 +118,8 @@ void Item::ActiveType()
 	case Types::Ammo:
 		player->AddResrveAmmo(10);
 		break;
-	case Types::Acceleration:
-		player->AddSpeed(50);
+	case Types::Acceleration:// 온오프 - bool /조건 아이템 생성시간 가져다가
+		player->AddSpeed(100);	
 		break;
 	}
 }

@@ -4,6 +4,7 @@
 #include "Bullet.h"
 #include "GameUI.h"
 #include "TileMap.h"
+#include <GameOver.h>
 
 Player::Player(const std::string& name)
 	: GameObject(name)
@@ -62,6 +63,9 @@ void Player::AddResrveAmmo(int ammo)
 void Player::AddSpeed(int s)
 {
 	speed += s;
+	isSpeedUp = true;
+	SpeedUptime = SpeedDuration;
+	std::cout << speed << std::endl;
 }
 
 void Player::Init()
@@ -126,6 +130,18 @@ void Player::Update(float dt)
 
 	direction.x = InputMgr::GetAxis(Axis::Horizontal);
 	direction.y = InputMgr::GetAxis(Axis::Vertical);
+
+	if (isSpeedUp)
+	{
+		SpeedUptime -= dt;
+		if (SpeedUptime <= 0.f)
+		{
+			speed -= 100;
+			isSpeedUp = false;
+			std::cout << speed << std::endl;
+		}
+	}
+
 
 	if (Utils::Magnitude(direction) > 1.f)
 	{
@@ -208,6 +224,7 @@ void Player::OnDamage(int damage)
 	ui->UpdateHpBar(maxHp, hp);
 	if (hp == 0)
 	{
-		SCENE_MGR.ChangeScene(sceneGame->Id);
+		//SCENE_MGR.ChangeScene(sceneGame->Id);
+		SCENE_MGR.ChangeScene(SceneIds::GameOver);
 	}
 }

@@ -27,11 +27,20 @@ protected:
 
 	sf::Sprite cursor;
 
+	sf::Text PauseMessage;
+	sf::Text AgainMessage;
+	sf::Text ExitMessage;		
+
+	
 	int stageLevel = 1;
 	int zombieCount = 0;
 
 	float GenerationInterval = 3.f;	
 	float GenerationTime = 0.f;
+
+	
+
+	bool pause = false;
 
 public:
 	static int score;
@@ -49,6 +58,7 @@ public:
 	void SpawnBlood(const sf::Vector2f& pos);
 	void Skill();
 	void SpawnZombies(int count);
+	void PauseMenu();
 
 	void StageClear();
 

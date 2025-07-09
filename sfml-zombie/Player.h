@@ -31,6 +31,10 @@ protected:
 	float shootInterval = 0.33f;
 	float shootTimer = 0.f;
 
+	bool isSpeedUp = false;
+	float SpeedUptime = 0.f;
+	float SpeedDuration = 5.f;
+
 	int hp = 0;
 	int mp = 0;
 	int maxHp = 100;

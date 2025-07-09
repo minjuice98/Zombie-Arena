@@ -5,6 +5,7 @@
 #include "SceneWave2.h"
 #include "SceneBoss2.h"
 #include "SceneTitle.h"
+#include "GameOver.h"
 
 void SceneMgr::Init()
 {
@@ -14,6 +15,7 @@ void SceneMgr::Init()
 	scenes.push_back(new SceneWave2());
 	scenes.push_back(new SceneBoss2());
 	scenes.push_back(new SceneUpgrade());
+	scenes.push_back(new GameOver());
 
 	for (auto scene : scenes)
 	{

@@ -26,6 +26,7 @@ protected:
 	Player* player = nullptr;	
 
 	float Duration = 8.f;
+	
 
 	HitBox hitBox;
 

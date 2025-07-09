@@ -23,6 +23,8 @@ protected:
 	std::vector<std::string> fontIds;
 	std::vector<std::string> soundIds;
 
+	bool pause = false;
+
 public:
 	sf::RenderWindow& GetWindow() { return window; }
 
@@ -41,10 +43,12 @@ public:
 	float GetDeltaTime() const { return deltaTime; }
 	float GetRealTime() const { return realTime; }
 	float GetRealDeltaTime() const { return realDeltaTime; }
-
+	
 	virtual void Init(int w, int h, const std::string& t);
 	virtual void Do();
 	virtual void Release();
+
+	void SetPauseStatus(bool pause);
 };
 
 #define FRAMEWORK (Framework::Instance())

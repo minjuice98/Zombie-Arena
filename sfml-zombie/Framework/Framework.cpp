@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Framework.h"
 
+
 void Framework::Init(int w, int h, const std::string& t)
 {
 	window.create(sf::VideoMode(w, h), t);
@@ -74,4 +75,10 @@ void Framework::Release()
 	SOUNDBUFFER_MGR.Unload(soundIds);
 	FONT_MGR.Unload(fontIds);
 	TEXTURE_MGR.Unload(texIds);
+}
+
+
+void Framework::SetPauseStatus(bool pause)
+{
+    timeScale = pause ? 0 : 1.f;
 }
