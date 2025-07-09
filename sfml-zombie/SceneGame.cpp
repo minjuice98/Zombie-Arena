@@ -103,15 +103,24 @@ void SceneGame::Exit()
 	}
 	bloodList.clear();
 
+	for (Item* item : itemList)
+	{
+		item->SetActive(false);
+		itemPool.push_back(item);
+	}
+	itemList.clear();
+
+
 	Scene::Exit();
 }
 
 void SceneGame::Update(float dt)
 {
 	cursor.setPosition(ScreenToUi(InputMgr::GetMousePosition()));
-
+	GenerationTime += dt;
 	Scene::Update(dt);
 
+	SpawnItems(30);
 	auto it = zombieList.begin();
 	while (it != zombieList.end())
 	{
@@ -129,6 +138,19 @@ void SceneGame::Update(float dt)
 			++it;
 		}
 	}
+	auto It = itemList.begin();
+	while (It != itemList.end())
+	{
+		if (!(*It)->GetActive())
+		{
+			itemPool.push_back(*It);
+			It = itemList.erase(It);
+		}
+		else
+		{
+			++It;
+		}
+	}
 
 	auto it2 = bloodList.begin();
 	while (it2 != bloodList.end())
@@ -141,39 +163,30 @@ void SceneGame::Update(float dt)
 		else
 		{
 			++it2;
-			auto It = itemList.begin();
-			while (It != itemList.end())
-			{
-				if (!(*It)->GetActive())
-				{
-					itemPool.push_back(*It);
-					It = itemList.erase(It);
-				}
-				else
-				{
-					++It;
-				}
-			}
-
-			worldView.setCenter(player->GetPosition());
-
-			if (InputMgr::GetKeyDown(sf::Keyboard::Space))// ���ӽ������� ���� 
-			{
-				SpawnZombies(10, 500.f);
-			}
-
-			if (InputMgr::GetMouseButton(sf::Mouse::Button::Right))
-			{
-				std::cout << "aa" << std::endl;
-				Skill();
-			}
-
-			if (InputMgr::GetKeyDown(sf::Keyboard::Return))
-			{
-				SCENE_MGR.ChangeScene(SceneIds::Boss);
-			}
 		}
 	}
+
+
+	worldView.setCenter(player->GetPosition());
+
+	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+	{
+		SpawnZombies(10, 500.f);
+	
+	}
+
+	if (InputMgr::GetMouseButton(sf::Mouse::Button::Right))
+	{
+		std::cout << "aa" << std::endl;
+		Skill();
+	}
+
+	if (InputMgr::GetKeyDown(sf::Keyboard::Return))
+	{
+		SCENE_MGR.ChangeScene(SceneIds::Boss);
+	}
+	
+
 }
 
 void SceneGame::Draw(sf::RenderWindow& window)
@@ -189,7 +202,7 @@ void SceneGame::SpawnZombies(int count, float radius)
 	{
 		if (zombiePool.empty())
 		{
-			zombie = (Zombie*)AddGameObject(new Zombie());//���� ���ο� ���� ��� �ּҸ� �����ּҿ�
+			zombie = (Zombie*)AddGameObject(new Zombie());
 			zombie->Init();
 		}
 		else
@@ -208,8 +221,10 @@ void SceneGame::SpawnZombies(int count, float radius)
 }
 
 void SceneGame::SpawnItems(int count)
-{
+{	
 	sf::FloatRect bounds = map->GetBounds();
+	bounds.left -= bounds.width * 0.5;
+	bounds.top  -= bounds.height * 0.5;
 
 	for (int i = 0; i < count; ++i)
 	{
@@ -222,8 +237,12 @@ void SceneGame::SpawnItems(int count)
 		else
 		{
 			item = itemPool.front();
-			itemPool.pop_front();
-			item->SetActive(true);
+			itemPool.pop_front();		
+			if (GenerationTime >= GenerationInterval)
+			{
+				item->SetActive(true);
+				GenerationTime = 0.f;
+			}
 		}
 		item->SetType((Item::Types)Utils::RandomRange(0, Item::TotalTypes));
 		item->Reset();

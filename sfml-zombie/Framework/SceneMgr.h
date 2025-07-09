@@ -12,6 +12,7 @@ protected:
 	SceneIds startScene = SceneIds::Game;
 	SceneIds currentScene = SceneIds::None;
 	SceneIds nextScene = SceneIds::None;
+	
 
 public:
 	void Init();

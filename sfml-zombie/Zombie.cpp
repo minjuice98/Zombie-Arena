@@ -104,7 +104,7 @@ void Zombie::SetType(Types type)
 		texId = "graphics/bloater.png";
 		maxHp = 500;
 		speed = 50.f;
-		damage = 40.f;
+		damage = 40;
 		attackInterval = 1.f;
 		mpUp = 3;
 		break;
@@ -112,7 +112,7 @@ void Zombie::SetType(Types type)
 		texId = "graphics/chaser.png";
 		maxHp = 250;
 		speed = 100.f;
-		damage = 30.f;
+		damage = 30;
 		attackInterval = 1.f;
 		mpUp = 2;
 		break;
@@ -120,7 +120,7 @@ void Zombie::SetType(Types type)
 		texId = "graphics/crawler.png";
 		maxHp = 150;
 		speed = 75.f;
-		damage = 20.f;
+		damage = 20;
 		attackInterval = 1.f;
 		mpUp = 3;
 		break;

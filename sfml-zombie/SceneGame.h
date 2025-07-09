@@ -30,9 +30,11 @@ protected:
 	int score = 0;
 	int zombieCount = 0;
 
-public:
-	SceneIds Id;
+	float GenerationInterval = 8.f;
 
+	float GenerationTime = 0.f;
+
+public:
 	SceneGame();
 	SceneGame(SceneIds id);
 	~SceneGame() override = default;

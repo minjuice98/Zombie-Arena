@@ -24,9 +24,10 @@ protected:
 	sf::Sprite item;
 	std::string texId;
 
-	float GenerationInterval = 10.f;
-	Player* player = nullptr;
-	float GenerationTime = 0.f;
+	Player* player = nullptr;	
+
+	float Duration = 8.f;
+
 	HitBox hitBox;
 
 public:	
