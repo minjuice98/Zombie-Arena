@@ -5,6 +5,8 @@
 class SceneBoss2 : public SceneGame
 {
 protected:
+	bool itemsSpawned = false; //아이템 오류
+
 	sf::Sprite boss;
 	std::string texId = "graphics/Boss.png";
 	sf::Vector2f direction;

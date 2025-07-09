@@ -33,6 +33,11 @@ protected:
 	float GenerationInterval = 3.f;	
 	float GenerationTime = 0.f;
 
+	sf::RectangleShape flashEffect;
+	float flashDuration = 0.1f;  
+	float flashTimer = 0.f;    
+	bool isFlashing = false;
+
 public:
 	static int score;
 	SceneGame();

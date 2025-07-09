@@ -45,6 +45,7 @@ void SceneBoss2::Init()
 void SceneBoss2::Enter()
 {
 	SceneGame::Enter();
+
 	stageLevel = 3;
 	ui->SetStageLevel(stageLevel);
 
@@ -66,12 +67,17 @@ void SceneBoss2::Enter()
 	UpdateBossHpUI();
 	SetupClearUI();
 
-	SpawnItems(10);
+	if (!itemsSpawned) //아이템 오류
+	{
+		SpawnItems(10);
+		itemsSpawned = true;
+	}
 	SpawnZombies(15);
 }
 
 void SceneBoss2::Exit()
 {
+	itemsSpawned = false; //아이템 오류
 	SceneGame::Exit();
 }
 
@@ -84,7 +90,6 @@ void SceneBoss2::Update(float dt)
 	{
 		SceneGame::Update(dt);
 
-		// 플레이어 사망 체크 추가
 		if (player->GetHp() <= 0)
 		{
 			SCENE_MGR.ChangeScene(SceneIds::GameOver);
@@ -116,6 +121,7 @@ void SceneBoss2::Update(float dt)
 					{
 						bullet->SetActive(false);
 						OnDamage(100);
+						SoundMgr::hit.play(); 
 						break;
 					}
 				}
@@ -127,7 +133,11 @@ void SceneBoss2::Update(float dt)
 					player->SetMp(0);
 					ui->UpdateManaMessage(0);
 
+					isFlashing = true;
+					flashTimer = 0.f;
+
 					OnDamage(200);
+					SoundMgr::splat.play();
 
 					for (auto zombie : zombieList)
 					{
@@ -194,6 +204,8 @@ void SceneBoss2::OnDamage(int damage)
 		isCleared = true;
 		scoreText.setString("SCORE: " + std::to_string(SceneGame::score));
 		SetupClearUI();
+
+		SoundMgr::splat.play();
 	}
 }
 

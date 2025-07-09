@@ -42,8 +42,8 @@ void Blood::SetOrigin(Origins preset)
 
 void Blood::Init()
 {
-	sortingLayer = SortingLayers::Foreground;
-	sortingOrder = 1;
+	sortingLayer = SortingLayers::Background;
+	sortingOrder = 0;
 }
 
 void Blood::Release()

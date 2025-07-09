@@ -61,6 +61,8 @@ void SceneGame::Init()
 	ui->SetPlayer(player);
 	ui->SetStageLevel(stageLevel);
 
+	flashEffect.setFillColor(sf::Color(255, 255, 255, 200));
+
 	Scene::Init();
 }
 
@@ -78,6 +80,9 @@ void SceneGame::Enter()
 
 	uiView.setSize(windowSize);
 	uiView.setCenter(windowSize * 0.5f);
+
+	flashEffect.setSize(windowSize);
+	flashEffect.setPosition(0, 0);
 
 	ApplyUpgrade();
 	Scene::Enter();
@@ -173,6 +178,16 @@ void SceneGame::Update(float dt)
 
 	worldView.setCenter(player->GetPosition());
 
+	if (isFlashing)
+	{
+		flashTimer += dt;
+		if (flashTimer >= flashDuration)
+		{
+			isFlashing = false;
+			flashTimer = 0.f;
+		}
+	}
+
 	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
 	{
 		SpawnZombies(10);
@@ -196,6 +211,11 @@ void SceneGame::Draw(sf::RenderWindow& window)
 	Scene::Draw(window);
 	window.setView(uiView);
 	window.draw(cursor);
+	
+	if (isFlashing)
+	{
+		window.draw(flashEffect);
+	}
 }
 
 void SceneGame::SpawnZombies(int count)
@@ -304,6 +324,9 @@ void SceneGame::Skill()
 	{
 		player->SetMp(0);
 		ui->UpdateManaMessage(0);
+		isFlashing = true;
+		flashTimer = 0.f;
+
 		for (Zombie* zombie : zombieList)
 		{
 			if (zombie->GetActive())
