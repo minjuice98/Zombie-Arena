@@ -232,5 +232,6 @@ void Player::OnDamage(int damage)
 		SceneUpgrade::speedUpgradeCount = 0;
 		SceneUpgrade::hpUpgradeCount = 0;
 		SceneUpgrade::pickupUpgradeCount = 0;
+		SceneUpgrade::nextSceneId = SceneIds::Wave1;
 	}
 }
