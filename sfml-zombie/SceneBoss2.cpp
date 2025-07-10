@@ -153,11 +153,6 @@ void SceneBoss2::Update(float dt)
 
 		worldView.setCenter(player->GetPosition());
 	}
-
-	if (InputMgr::GetKeyDown(sf::Keyboard::Return))
-	{
-		SCENE_MGR.ChangeScene(SceneIds::Boss);
-	}
 }
 
 void SceneBoss2::Draw(sf::RenderWindow& window)
