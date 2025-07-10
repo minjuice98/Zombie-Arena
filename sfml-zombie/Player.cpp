@@ -229,5 +229,8 @@ void Player::OnDamage(int damage)
 	{
 		//SCENE_MGR.ChangeScene(sceneGame->Id);
 		SCENE_MGR.ChangeScene(SceneIds::GameOver);
+		SceneUpgrade::speedUpgradeCount = 0;
+		SceneUpgrade::hpUpgradeCount = 0;
+		SceneUpgrade::pickupUpgradeCount = 0;
 	}
 }
