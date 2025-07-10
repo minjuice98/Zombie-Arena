@@ -6,6 +6,7 @@
 #include "Blood.h"
 #include "GameUI.h"
 #include "Item.h"
+#include "Framework.h"
 
 int SceneGame::score = 0;
 
@@ -34,6 +35,16 @@ void SceneGame::Init()
 	texIds.push_back("graphics/health_pickup.png");
 	texIds.push_back("graphics/ammo_pickup.png");
 	texIds.push_back("graphics/acceleration.png");
+
+	
+	ExitMessage.setFont(FONT_MGR.Get("fonts/zombiecontrol.ttf"));
+
+	const int CHARSIZE = 70;
+	PauseMessage.setFont(FONT_MGR.Get("fonts/zombiecontrol.ttf"));	
+	ExitMessage.setCharacterSize(CHARSIZE);			
+	ExitMessage.setPosition({ 580.f,250.f });	
+	ExitMessage.setString("exit");
+
 
 	map = (TileMap*)AddGameObject(new TileMap("TileMap"));
 	player = (Player*)AddGameObject(new Player("Player"));
@@ -174,9 +185,16 @@ void SceneGame::Update(float dt)
 
 	worldView.setCenter(player->GetPosition());
 
-	if (InputMgr::GetKeyDown(sf::Keyboard::Space))
+	if (InputMgr::GetKeyDown(sf::Keyboard::Escape))
 	{
-		SpawnZombies(10);
+		pause = !pause;
+		FRAMEWORK.SetPauseStatus(pause);
+	}
+	if (pause)
+	{
+		PauseMenu();
+
+
 	}
 
 	if (InputMgr::GetMouseButtonDown(sf::Mouse::Right))
@@ -185,11 +203,11 @@ void SceneGame::Update(float dt)
 		Skill();
 	}
 
-	if (InputMgr::GetKeyDown(sf::Keyboard::Return))
+	/*if (InputMgr::GetKeyDown(sf::Keyboard::Return))
 	{
 		score = 0;
 		SCENE_MGR.ChangeScene(Id);
-	}
+	}*/
 }
 
 void SceneGame::Draw(sf::RenderWindow& window)
@@ -197,6 +215,11 @@ void SceneGame::Draw(sf::RenderWindow& window)
 	Scene::Draw(window);
 	window.setView(uiView);
 	window.draw(cursor);
+
+	if (pause)
+	{	
+		window.draw(ExitMessage);
+	}
 }
 
 void SceneGame::SpawnZombies(int count)
@@ -224,6 +247,36 @@ void SceneGame::SpawnZombies(int count)
 	ui->UpdateZombieCountMessage(zombieCount);
 }
 
+void SceneGame::PauseMenu()
+{
+	if (Utils::PointInTransformBounds(AgainMessage, AgainMessage.getLocalBounds(), cursor.getPosition()))
+	{
+		AgainMessage.setFillColor(sf::Color::Yellow);
+		if (InputMgr::GetMouseButtonDown(sf::Mouse::Left))
+		{
+			SCENE_MGR.ChangeScene(SceneIds::Title);
+		}
+	}
+	else
+	{
+		AgainMessage.setFillColor(sf::Color::White);
+	}
+
+	if (Utils::PointInTransformBounds(ExitMessage, ExitMessage.getLocalBounds(), cursor.getPosition()))
+	{
+		ExitMessage.setFillColor(sf::Color::Yellow);
+		if (InputMgr::GetMouseButtonDown(sf::Mouse::Left))
+		{
+			FRAMEWORK.GetWindow().close();
+		}
+	}
+	else
+	{
+		ExitMessage.setFillColor(sf::Color::White);
+	}
+
+}
+
 void SceneGame::StageClear()
 {
 	SceneUpgrade::nextSceneId = (SceneIds)((int)Id + 1);
@@ -249,7 +302,7 @@ void SceneGame::ApplyUpgrade()
 }
 
 void SceneGame::SpawnItems(int count)
-{	
+{
 	sf::FloatRect bounds = map->GetBounds();
 	bounds.left -= bounds.width * 0.5f;
 	bounds.top -= bounds.height * 0.5f;
@@ -265,7 +318,7 @@ void SceneGame::SpawnItems(int count)
 		else
 		{
 			item = itemPool.front();
-			itemPool.pop_front();		
+			itemPool.pop_front();
 			if (GenerationTime >= GenerationInterval)
 			{
 				item->SetActive(true);
