@@ -2,7 +2,6 @@
 #include "Item.h"
 #include "Player.h"
 
-
 Item::Item(const std::string& name)
 	: GameObject(name)
 {
@@ -80,10 +79,6 @@ void Item::Update(float dt)//��Ʈ�ڽ�
 	}
 }
 
-
-
-
-
 void Item::Draw(sf::RenderWindow& window)
 {
 	window.draw(item);
@@ -124,6 +119,3 @@ void Item::ActiveType()
 		break;
 	}
 }
-
-
-

@@ -64,14 +64,4 @@ public:
 	}
 
 	void ActiveType();
-
-
-
-
-
-
-
-
-
 };
-

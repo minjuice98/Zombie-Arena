@@ -1,6 +1,6 @@
 #pragma once
 #include "Scene.h"
-class GameOver :    public Scene
+class GameOver : public Scene
 {
 protected:
 	sf::Sprite background;
@@ -20,4 +20,3 @@ public:
 	void Update(float dt) override;
 	void Draw(sf::RenderWindow& window) override;
 };
-

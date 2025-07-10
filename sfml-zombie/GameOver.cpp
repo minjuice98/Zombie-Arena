@@ -20,8 +20,6 @@ void GameOver::Init()
 	restartMessage.setCharacterSize(CHARSIZE);
 	exitMessage.setCharacterSize(CHARSIZE);
 
-
-	
 	deathMessage.setPosition({ 330.f,200.f });
 	restartMessage.setPosition({ 400.f,450.f });
 	exitMessage.setPosition({ 450.f,630.f });
@@ -85,8 +83,6 @@ void GameOver::Update(float dt)
 	{
 		exitMessage.setFillColor(sf::Color::White);
 	}
-
-
 
 }
 void GameOver::Draw(sf::RenderWindow& window)

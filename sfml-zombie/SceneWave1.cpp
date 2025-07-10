@@ -13,7 +13,6 @@ SceneWave1::SceneWave1()
 void SceneWave1::Init()
 {
 	stageLevel = 1;
-
 	SceneGame::Init();
 
 	map->SetSize({ 10,10 });

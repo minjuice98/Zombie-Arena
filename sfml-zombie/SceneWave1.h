@@ -4,7 +4,6 @@
 class SceneWave1 : public SceneGame
 {
 protected:
-
 public:
 	SceneWave1();
 	~SceneWave1() override = default;

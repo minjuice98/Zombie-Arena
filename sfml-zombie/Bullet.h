@@ -44,6 +44,7 @@ public:
 		return body.getGlobalBounds();
 	}
 
+	const HitBox& GetHitBox() const { return hitBox; }
+
 	void Fire(const sf::Vector2f& pos, const sf::Vector2f& dir, float s, int d);
 };
-

@@ -26,8 +26,6 @@ protected:
 
 public:
 
-
-
 	bool Load(const std::string& id)
 	{
 		auto it = resources.find(id);
